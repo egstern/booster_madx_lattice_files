@@ -1,0 +1,44 @@
+  title, 'FNAL Booster lattice';
+ ! Converted from MAD8 version by M. McAteer and C.Y. Tan
+ ! See booster_readme.txt for revision history from MAD8 version
+
+ option, -echo, warn, info;
+ set,  format="20.10f";
+ !option, RBARC=false;
+
+
+/********** choose time in acceleration ramp to use: ***************************/
+ t0 = 2.0;									! time in cycle, in ms (where injection = 2 ms)
+ /******************************************************************************/
+
+ KE0=.4;  									! injection kinetic energy (in GeV)
+ KEext=8.0;  								! extraction kinetic energy (in GeV)
+ pcInj = sqrt(( KE0 + pmass)*( KE0 + pmass)- pmass * pmass); 		 ! injection momentum
+ pcExt = sqrt(( KEext + pmass)*( KEext + pmass)- pmass * pmass); 	 ! extraction momentum
+ pc = (pcExt + pcInj)/2 - (pcExt - pcInj)/2 * cos(2*PI*15*(t0-2)/1000);		! momentum at chosen time point
+ kpc=pcInj/pc;
+ Brho= pc/ clight *1e9;  
+ 
+! Read files containing element definitions and booster sequence:
+call, file = './booster.ele';
+call, file = './booster.seq';
+
+beam, particle = PROTON, pc= pc;  
+use, sequence = booster;
+
+/*********** define dispersion correctly (since MADX uses pt, not delta p, as 5th variable) *****/
+beta=sqrt(1-1/beam->gamma^2);
+dispx:=beta*table(twiss,dx); ! Delta_x=dispx*Delta_p/p;
+dispy:=beta*table(twiss,dy); ! Delta_y=dispy*Delta_p/p;
+
+PSHIFT=0;
+select, flag=twiss, clear;
+select, flag=twiss, column=name,s,l,tilt,angle,k1L,k2L,k1SL,k2SL,BETX,BETY,ALFX,ALFY,DX,DY,mux,muy,dispx,dispy;
+twiss , DELTAP = PSHIFT, refer=centre, table=TWISS, file='./booster.outx';
+
+plot, HAXIS=s,STYLE=100,SPLINE,
+      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=0,0,
+      VMAX=50,5,HMIN=0,HMAX=20,
+      TITLE="Booster Cell";
+
+STOP;

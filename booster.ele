@@ -1,0 +1,159 @@
+/************************************************************************************/
+/*                       MAGNET CLASS DEFINITIONS                                   */
+/************************************************************************************/
+
+//---------------------- Main bending magnets magnets         ---------------------------------------------
+qsd     :=     -0.0577069;                      !  body quadrupole component of defocusing magnet
+qsf     :=      0.0542195;                      !  body quadrupole component of focusing magnet
+ssf     :=     -0.0023;                         !  0.0280 - 0.0310*kpc     !  body sextupole component of focusing magnet    (new 03/07/03) at inject
+ssd     :=     -0.0426;                         ! -0.0680 + 0.0226*kpc     !  body sextupole component of defocusing magnet  (new 03/07/03) at inject
+rhof    :=      40.847086;                      !  bending radius of focusing magnet
+rhod   	:=      48.034101;                      !  bending radius of defocusing magnet
+blength	:=     2.889612;! 2.889;                       !  bending length (along the equilibrium trajectory)
+FMAG        : RBEND		, L = blength	, ANGLE = blength/rhof, K1 = qsf  , K2 = ssf; ;
+DMAG        : RBEND		, L = blength	, ANGLE = blength/rhod, K1 = qsd  , K2 = ssd; ;
+
+//---------------------- Other RBEND magnets ------------------------------------------------------------
+MKS02       : RBEND		, L = 1.080	   , ANGLE = 0 , TILT = pi/2; 
+MKS12       : RBEND		, L = 1.08     , ANGLE = 0 , TILT = pi/2;          ! vertical extraction kicker
+BEX         : RBEND		, L = 0.265    , TILT  = pi/2;                     ! BEX bump
+SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2;
+
+//---------------------- Corrector Package Elements ---------------------------------------------
+DHZ    	    : HKICKER		, L = 0.024;         
+DVT       	: VKICKER		, L = 0.024;      
+NQUAD       : QUADRUPOLE	, L = 0.0234;        
+SQUAD  	    : QUADRUPOLE	, L = 0.024, TILT = -pi/4;        
+NSEXT       : SEXTUPOLE	    , L = 0.024;      
+SSEXT       : SEXTUPOLE	    , L = 0.024, TILT = -pi/6;     
+BPM_1		: MONITOR		, L = 0.024;  
+
+//---------------------- Collimators   ---------------------------------------------
+COLL_P      : RCOLLIMATOR	, L := 0.0001	;        ! primary collimator
+COLL_SEC	: RCOLLIMATOR	, L := 0.6		;        ! secondary collimator
+HALF_SP     : DRIFT         , L := 0.2499;!0.24995	;        ! half of primary collimator
+PRIM_H      : RCOLLIMATOR	, L := 0.0001	;
+PRIM_V      : RCOLLIMATOR	, L := 0.0001	;
+
+//---------------------- Instrumentation        ---------------------------------------------
+FOIL		: INSTRUMENT	, L := 0.001;        ! injection stripping foil
+IPM         : INSTRUMENT	, L = 0.3;
+RPOS_MON	: MONITOR		, L = 0.1;
+BPM_2		: MONITOR		, L = 0.095;          ! "upstream" (currently functioning) bpms in sections 3, 6, 7
+PHASE_DET	: INSTRUMENT	, L = 0.5;
+WALL_MON	: INSTRUMENT	, L = 0.5;
+LONG_DAMPER : INSTRUMENT	, L = 0.5;
+
+//---------------------- KICKERS        ---------------------------------------------
+NOTCHER     : VKICKER		, L := 1.08;     ! Notcher
+HPINGER     : HKICKER		, L := 1.08;     ! Horizontal pinger
+VPINGER     : VKICKER		, L := 1.08;     ! Horizontal pinger
+HDAMPER     : HKICKER		, L := 1.27;   
+VDAMPER     : VKICKER		, L := 1.27;   
+DAMPER_PU	: VKICKER		, L := 0.5;      ! Damper pickup
+
+//---------------------- SEXTUPOLE      ---------------------------------------------
+SXHARM4     : SEXTUPOLE	, L := 0.3;  			    	! Harmonic sextupole (normal)
+SXHARM5     : SEXTUPOLE	, L := 0.3;  			    	! Harmonic sextupole (normal)
+SSXHARM6    : SEXTUPOLE	, L := 0.3	, TILT = -pi/6;		! Harmonic sextupole (skew)
+SSXHARM7    : SEXTUPOLE	, L := 0.3	, TILT = -pi/6;		! Harmonic sextupole (skew)
+SEX_DISC    : SEXTUPOLE	, L := 0.42;
+
+//---------------------- OCTUPOLE       ---------------------------------------------
+OCT         : OCTUPOLE    , L := 0.42;		! Harmonic Octupoles 
+
+//---------------------- Drifts (old instrumentation)   ---------------------------
+SEXTL       : DRIFT		, L = 0.42;
+OLDBPM      : DRIFT		, L = 0.095;
+OLDBEX      : DRIFT		, L = 0.265;	! old BEX bump
+
+//------  Septa     ------------------------------------------------------------------//
+SEPTU03     : RBEND	, L = 1.524/2, ANGLE = 0.00000001, TILT = pi/2	;    !  septum, extraction to MI-8
+
+//-----  Orbump         -----------------------------------------------------
+L_ORB       = 0.4823;
+IF (t0 < 2.05) {korbump = 1;}
+ELSE {korump = 0;}              ! orbump is only on for ~ 50 microsecs after injection
+value, korbump;
+
+ORBUMPa_1  : RBEND , L = L_ORB/2   , ANGLE = -0.011*korbump    ,    !  half of outer orbit bump magnet (injection)
+          E1 = 0.011*korbump/2  , E2 = -0.011*korbump/2     , 
+          K1 = -0.0023173*korbump/L_ORB , K2 = 0.10077*korbump/L_ORB,   K3 = -11.625*korbump/L_ORB;
+MULBUMP_1 : MULTIPOLE, KNL = {0, 0, 0, 0, 1049.5*korbump, -46803000.0*korbump, 1625200.0*korbump};
+
+ORBUMPa_2   : RBEND , L = L_ORB/2   , ANGLE = 0.022*korbump ,   !  half of inner orbit bump magnet (injection)  
+          E1 = 0.022*korbump/2  , E2=-0.022*korbump/2       , 
+          K1 = 0.0031418*korbump/L_ORB  , K2=0.02218*korbump/L_ORB  , K3 = 3.3586*korbump/L_ORB;
+MULBUMP_2  : MULTIPOLE, KNL = {0, 0, 0, 0, 135.01*korbump, -10305000.0*korbump, -3250500.0*korbump};
+
+ORBUMPa_4  : RBEND , L = L_ORB/2   , ANGLE = -0.011*korbump    ,    !  half of outer orbit bump magnet (injection)
+          E1 = -0.011*korbump/2  , E2 = 0.011*korbump/2     , 
+          K1 = -0.0023173*korbump/L_ORB , K2 = 0.10077*korbump/L_ORB,   K3 = -11.625*korbump/L_ORB;
+MULBUMP_4 : MULTIPOLE, KNL = {0, 0, 0, 0, 1049.5*korbump, -46803000.0*korbump, 1625200.0*korbump};
+
+L_ORB_FULL  := 0.4823097;          ! length along reference orbit (used in sequence definition to aviod negative drift space error)
+ORBUMP_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_1, L = L_ORB_FULL;
+ ORBUMPa_1                      , AT = L_ORB_FULL/4;
+ MULBUMP_1                     , AT = L_ORB_FULL/2;
+ ORBUMPa_1                      , AT = 3*L_ORB_FULL/4;
+ENDSEQUENCE;
+ORBUMP_2    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_2, L = L_ORB_FULL;
+ ORBUMPa_2                     ,AT = L_ORB_FULL/4;
+ MULBUMP_2                    , AT = L_ORB_FULL/2;
+ ORBUMPa_2                     , AT = 3*L_ORB_FULL/4;
+ENDSEQUENCE;
+ORBUMP_4    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_4, L = L_ORB_FULL;
+ ORBUMPa_4                     ,AT = L_ORB_FULL/4;
+ MULBUMP_4                    , AT = L_ORB_FULL/2;
+ ORBUMPa_4                     , AT = 3*L_ORB_FULL/4;
+ENDSEQUENCE;
+
+//-----  Dogleg magnets     ---------------------------------------------------------
+L_DOG	 = 0.24722;
+L_DOG_FULL  :=  0.247221414912;         ! length along reference orbit (used in sequence definition to aviod negative drift space error)
+DOG03_1a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344*kpc/2	    , TILT := pi/2	,      ! half DBL001  DogLeg magmet 
+            E1 := -0.01172/2*kpc	, E2 := 0.01172/2*kpc	,
+            K1 := -0.00007091/L_DOG*kpc, K2 := 0.045547/L_DOG*kpc	, K3 := 0.19956/L_DOG*kpc;
+MULDG03_1   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -8.1984*kpc, -1506.3*kpc, -354750.0*kpc};	! multipole of DOG03_1
+DOG03_1    : line = (DOG03_1a, MULDG03_1,DOG03_1a);
+DOG03_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_1, L = L_DOG_FULL;
+ DOG03_1a                     , AT = L_DOG_FULL/4;
+ MULDG03_1                    , AT = L_DOG_FULL/2;
+ DOG03_1a                     , AT = 3*L_DOG_FULL/4;
+ENDSEQUENCE;
+       
+  
+DOG03_2a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344*kpc/2	, TILT := pi/2	,      ! half DBL002  DogLeg magmet 
+          	E1 := -0.01172*kpc/2	, E2 := 0.01172*kpc/2	,
+            K1 := -0.000078369*kpc/L_DOG, K2 := 0.047016*kpc/.24722, K3 := 0.13622/L_DOG*kpc  ;
+MULDG03_2   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -30.061*kpc, 1264.2*kpc, 1074800.0*kpc};	! multipole of DOG03_2
+DOG03_2    : line = (DOG03_2a, MULDG03_2,DOG03_2a);
+DOG03_2    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_2, L = L_DOG_FULL;
+ DOG03_2a                     , AT = L_DOG_FULL/4;
+ MULDG03_2                    , AT = L_DOG_FULL/2;
+ DOG03_2a                     , AT = 3*L_DOG_FULL/4;
+ENDSEQUENCE;
+
+DOG03_3a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344*kpc/2	, TILT := pi/2	,      ! half DBL004  DogLeg magmet 
+          	E1 := 0.01172*kpc/2	, E2 := -0.01172*kpc/2	,
+            K1 := 0.000057844*kpc/L_DOG, K2 := 0.04848*kpc/.24722, K3 := 0.05206*kpc/L_DOG	;
+MULDG03_3   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 8.1984*kpc, -2151.8*kpc, -561250.0*kpc};	! multipole of DOG03_3
+DOG03_3    : line = (DOG03_3a, MULDG03_3,DOG03_3a);
+DOG03_3    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_3, L = L_DOG_FULL;
+ DOG03_3a                     , AT = L_DOG_FULL/4;
+ MULDG03_3                    , AT = L_DOG_FULL/2;
+ DOG03_3a                     , AT = 3*L_DOG_FULL/4;
+ENDSEQUENCE;
+
+DOG03_4a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344*kpc/2	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
+          	E1 := 0.01172*kpc/2	, E2 := -0.01172/2*kpc	,
+            K1 := -0.00000093*kpc/L_DOG, K2 := 0.042608*kpc/L_DOG, K3 := -0.0538*kpc/L_DOG; 
+MULDG03_4   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 4.0992*kpc, 14794.0*kpc, -317690.0*kpc};	! multipole of DOG03_4
+DOG03_4    : line = (DOG03_4a, MULDG03_4,DOG03_4a);
+DOG03_4    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_4, L = L_DOG_FULL;
+ DOG03_4a                     , AT = L_DOG_FULL/4;
+ MULDG03_4                    , AT = L_DOG_FULL/2;
+ DOG03_4a                     , AT = 3*L_DOG_FULL/4;
+ENDSEQUENCE;
+
+ return;
