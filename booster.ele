@@ -20,13 +20,14 @@ BEX         : RBEND		, L = 0.265    , TILT  = pi/2;                     ! BEX bu
 SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2;
 
 //---------------------- Corrector Package Elements ---------------------------------------------
-DHZ    	    : HKICKER		, L = 0.024;         
-DVT       	: VKICKER		, L = 0.024;      
-NQUAD       : QUADRUPOLE	, L = 0.0234;        
-SQUAD  	    : QUADRUPOLE	, L = 0.024, TILT = -pi/4;        
-NSEXT       : SEXTUPOLE	    , L = 0.024;      
-SSEXT       : SEXTUPOLE	    , L = 0.024, TILT = -pi/6;     
-BPM_1		: MONITOR		, L = 0.024;  
+DHZ    	    : HKICKER		, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
+DVT       	: VKICKER		, L = 0.024 , CALIB = 0.000365 / 0.024 / Brho;      
+NQUAD       : QUADRUPOLE	, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
+ERRQUAD     : MULTIPOLE   ;        
+SQUAD  	    : QUADRUPOLE 	, L = 0.024 , CALIB = 0.003924 / 0.024 / Brho;        
+NSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045831 / 0.024 / Brho;      
+SSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;     
+BPM_1		: MONITOR		, L = 0.024 ;  
 
 //---------------------- Collimators   ---------------------------------------------
 COLL_P      : RCOLLIMATOR	, L := 0.0001	;        ! primary collimator
@@ -53,10 +54,10 @@ VDAMPER     : VKICKER		, L := 1.27;
 DAMPER_PU	: VKICKER		, L := 0.5;      ! Damper pickup
 
 //---------------------- SEXTUPOLE      ---------------------------------------------
-SXHARM4     : SEXTUPOLE	, L := 0.3;  			    	! Harmonic sextupole (normal)
-SXHARM5     : SEXTUPOLE	, L := 0.3;  			    	! Harmonic sextupole (normal)
-SSXHARM6    : SEXTUPOLE	, L := 0.3	, TILT = -pi/6;		! Harmonic sextupole (skew)
-SSXHARM7    : SEXTUPOLE	, L := 0.3	, TILT = -pi/6;		! Harmonic sextupole (skew)
+SXHARM4     : SEXTUPOLE	, L := 0.3 , K2 = I_SEXL4 * 0.003717 / .30 / Brho ;  			    	! Harmonic sextupole (normal)
+SXHARM5     : SEXTUPOLE	, L := 0.3 , K2 = I_SEXL5 * 0.003717 / .30 / Brho ;  			    	! Harmonic sextupole (normal)
+SSXHARM6    : SEXTUPOLE	, L := 0.3 , K2 = I_SEXL6 * 0.003717 / .30 / Brho	, TILT = -pi/6;		! Harmonic sextupole (skew)
+SSXHARM7    : SEXTUPOLE	, L := 0.3 , K2 = I_SEXL7 * 0.003717 / .30 / Brho	, TILT = -pi/6;		! Harmonic sextupole (skew)
 SEX_DISC    : SEXTUPOLE	, L := 0.42;
 
 //---------------------- OCTUPOLE       ---------------------------------------------
@@ -111,10 +112,10 @@ ENDSEQUENCE;
 //-----  Dogleg magnets     ---------------------------------------------------------
 L_DOG	 = 0.24722;
 L_DOG_FULL  :=  0.247221414912;         ! length along reference orbit (used in sequence definition to aviod negative drift space error)
-DOG03_1a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344*kpc/2	    , TILT := pi/2	,      ! half DBL001  DogLeg magmet 
-            E1 := -0.01172/2*kpc	, E2 := 0.01172/2*kpc	,
-            K1 := -0.00007091/L_DOG*kpc, K2 := 0.045547/L_DOG*kpc	, K3 := 0.19956/L_DOG*kpc;
-MULDG03_1   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -8.1984*kpc, -1506.3*kpc, -354750.0*kpc};	! multipole of DOG03_1
+DOG03_1a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344* I_DOGL03 / 180 *kpc/2	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
+            E1 := -0.01172/2* I_DOGL03 / 180 *kpc	, E2 := 0.01172/2* I_DOGL03 / 180 *kpc	,
+            K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
+MULDG03_1   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -8.1984* I_DOGL03 / 180 *kpc, -1506.3* I_DOGL03 / 180 *kpc, -354750.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_1
 DOG03_1    : line = (DOG03_1a, MULDG03_1,DOG03_1a);
 DOG03_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_1, L = L_DOG_FULL;
  DOG03_1a                     , AT = L_DOG_FULL/4;
@@ -123,10 +124,10 @@ DOG03_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_1, L = L_DOG_FULL;
 ENDSEQUENCE;
        
   
-DOG03_2a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344*kpc/2	, TILT := pi/2	,      ! half DBL002  DogLeg magmet 
-          	E1 := -0.01172*kpc/2	, E2 := 0.01172*kpc/2	,
-            K1 := -0.000078369*kpc/L_DOG, K2 := 0.047016*kpc/.24722, K3 := 0.13622/L_DOG*kpc  ;
-MULDG03_2   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -30.061*kpc, 1264.2*kpc, 1074800.0*kpc};	! multipole of DOG03_2
+DOG03_2a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344* I_DOGL03 / 180 *kpc/2	, TILT := pi/2	,      ! half DBL002  DogLeg magnet 
+          	E1 := -0.01172* I_DOGL03 / 180 *kpc/2	, E2 := 0.01172* I_DOGL03 / 180 *kpc/2	,
+            K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
+MULDG03_2   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -30.061* I_DOGL03 / 180 *kpc, 1264.2* I_DOGL03 / 180 *kpc, 1074800.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_2
 DOG03_2    : line = (DOG03_2a, MULDG03_2,DOG03_2a);
 DOG03_2    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_2, L = L_DOG_FULL;
  DOG03_2a                     , AT = L_DOG_FULL/4;
@@ -134,10 +135,10 @@ DOG03_2    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_2, L = L_DOG_FULL;
  DOG03_2a                     , AT = 3*L_DOG_FULL/4;
 ENDSEQUENCE;
 
-DOG03_3a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344*kpc/2	, TILT := pi/2	,      ! half DBL004  DogLeg magmet 
-          	E1 := 0.01172*kpc/2	, E2 := -0.01172*kpc/2	,
-            K1 := 0.000057844*kpc/L_DOG, K2 := 0.04848*kpc/.24722, K3 := 0.05206*kpc/L_DOG	;
-MULDG03_3   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 8.1984*kpc, -2151.8*kpc, -561250.0*kpc};	! multipole of DOG03_3
+DOG03_3a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344* I_DOGL03 / 180 *kpc/2	, TILT := pi/2	,      ! half DBL004  DogLeg magnet 
+          	E1 := 0.01172* I_DOGL03 / 180 *kpc/2	, E2 := -0.01172* I_DOGL03 / 180 *kpc/2	,
+            K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
+MULDG03_3   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 8.1984* I_DOGL03 / 180 *kpc, -2151.8* I_DOGL03 / 180 *kpc, -561250.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_3
 DOG03_3    : line = (DOG03_3a, MULDG03_3,DOG03_3a);
 DOG03_3    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_3, L = L_DOG_FULL;
  DOG03_3a                     , AT = L_DOG_FULL/4;
@@ -145,10 +146,10 @@ DOG03_3    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_3, L = L_DOG_FULL;
  DOG03_3a                     , AT = 3*L_DOG_FULL/4;
 ENDSEQUENCE;
 
-DOG03_4a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344*kpc/2	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
-          	E1 := 0.01172*kpc/2	, E2 := -0.01172/2*kpc	,
-            K1 := -0.00000093*kpc/L_DOG, K2 := 0.042608*kpc/L_DOG, K3 := -0.0538*kpc/L_DOG; 
-MULDG03_4   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 4.0992*kpc, 14794.0*kpc, -317690.0*kpc};	! multipole of DOG03_4
+DOG03_4a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344* I_DOGL03 / 180 *kpc/2	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
+          	E1 := 0.01172* I_DOGL03 / 180 *kpc/2	, E2 := -0.01172/2* I_DOGL03 / 180 *kpc	,
+            K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG; 
+MULDG03_4   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 4.0992* I_DOGL03 / 180 *kpc, 14794.0* I_DOGL03 / 180 *kpc, -317690.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_4
 DOG03_4    : line = (DOG03_4a, MULDG03_4,DOG03_4a);
 DOG03_4    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_4, L = L_DOG_FULL;
  DOG03_4a                     , AT = L_DOG_FULL/4;
@@ -156,4 +157,29 @@ DOG03_4    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_4, L = L_DOG_FULL;
  DOG03_4a                     , AT = 3*L_DOG_FULL/4;
 ENDSEQUENCE;
 
- return;
+
+CPL03       : SEQUENCE, REFER=CENTRE, REFPOS = CPL03_START, L = 0.3;
+ CPL03_START     : MARKER          , AT = 0;
+ HL03            : DHZ             , AT = 0.078,           HKICK := DHZ->CALIB*I_HL03 ;
+ VL03            : DVT             , AT = 0.102,           VKICK := DVT->CALIB*I_VL03  ;
+ QL03            : NQUAD           , AT = 0.126,           K1    := NQUAD->CALIB*I_QL03 ;
+ QLERR03         : ERRQUAD         , AT = 0.138,           KNL  := {0, K_QLERR03}       ;
+ BPML03          : BPM_1           , AT = 0.15; 
+ QSL03           : SQUAD           , AT = 0.174,           K1S   := SQUAD->CALIB*I_SQL03;
+ QSLERR03        : ERRQUAD         , AT = 0.186,           KSL  := {0, K_SQLERR03}      ;
+ SXL03           : NSEXT           , AT = 0.198,           K2    := NSEXT->CALIB*I_SXL03;
+ SSL03           : SSEXT           , AT = 0.222,           K2S   := SSEXT->CALIB*I_SSL03;
+ENDSEQUENCE;
+
+DOGLEG    : SEQUENCE, REFER = CENTRE, REFPOS = START_DOG, L = 4 * L_DOG_FULL + 2*.769 + 2*.474 + 1.524;
+ START_DOG:     MARKER       , AT = 0;
+ DOG03_1                     , AT = L_DOG_FULL/2;
+ CPL03                       , AT = L_DOG_FULL + 0.769 - 0.35;
+ DOG03_2                     , AT = L_DOG_FULL + 0.769 + L_DOG_FULL/2;
+ SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524/4;
+ SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 3*1.524/4;
+ DOG03_3                     , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524 + 0.474 + L_DOG_FULL/2;
+ DOG03_4                     , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524 + 0.474 + L_DOG_FULL + 0.769 + L_DOG_FULL/2;
+ENDSEQUENCE;
+
+return;

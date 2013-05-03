@@ -1,25 +1,71 @@
   title, 'FNAL Booster lattice';
- ! Converted from MAD8 version by M. McAteer and C.Y. Tan
- ! See booster_readme.txt for revision history from MAD8 version
+ ! Converted from MAD8 version by M. McAteer and C.Y. Tan 
+ ! Operational values of corrector package magnet currents and dogleg current have been added -MM
+ ! Pseudo-quad errors from LOCO analysis of 3/4/13 ORM measurement have been added -MM
+ ! Dogleg layout has been altered to match drawing of layout -MM
+ ! Note: layout of dogleg magnet (particularly location of U3L bpm) still needs to be verified by copmassarison with survey data -MM
 
  option, -echo, warn, info;
  set,  format="20.10f";
  !option, RBARC=false;
 
-
-/********** choose time in acceleration ramp to use: ***************************/
- t0 = 2.0;									! time in cycle, in ms (where injection = 2 ms)
- /******************************************************************************/
-
- KE0=.4;  									! injection kinetic energy (in GeV)
- KEext=8.0;  								! extraction kinetic energy (in GeV)
- pcInj = sqrt(( KE0 + pmass)*( KE0 + pmass)- pmass * pmass); 		 ! injection momentum
- pcExt = sqrt(( KEext + pmass)*( KEext + pmass)- pmass * pmass); 	 ! extraction momentum
- pc = (pcExt + pcInj)/2 - (pcExt - pcInj)/2 * cos(2*PI*15*(t0-2)/1000);		! momentum at chosen time point
- kpc=pcInj/pc;
- Brho= pc/ clight *1e9;  
  
-! Read files containing element definitions and booster sequence:
+/********** choose time in acceleration rapmass to use by choosing a "slot" on the magnet setting table (ie QL.dat table): ***************************/
+timeSlot=3;
+errorSwitch=1;
+/*****************************************************************************/
+
+
+/************ read in settings for corrector package magnets, dogleg, and pseudo-quad errors from tables: ***************************/
+
+! strength of doglegs, harmonic correctors, and other DC elements:
+READMYTABLE,file="DC.dat",table=DCtable;
+setvars, table=DCtable,row= 1;
+value, i_DOGL03;
+
+! strengths of corrector package elements (as set for 3 April 2013 measurements; from file 3Apr_newSkew_Settings.txt):
+READMYTABLE,file="QL.dat",table=QLtable;
+setvars, table=QLtable,row= timeSlot;
+READMYTABLE,file="QS.dat",table=QStable;
+setvars, table=QStable,row= timeSlot;
+READMYTABLE,file="SQL.dat",table=SQLtable;
+setvars, table=SQLtable,row= timeSlot;
+READMYTABLE,file="SQS.dat",table=SQStable;
+setvars, table=SQStable,row= timeSlot;
+READMYTABLE,file="SXL.dat",table=SXLtable;
+setvars, table=SXLtable,row= timeSlot;
+READMYTABLE,file="SXS.dat",table=SXStable;
+setvars, table=SXStable,row= timeSlot;
+READMYTABLE,file="SSL.dat",table=SSLtable;
+setvars, table=SSLtable,row= timeSlot;
+READMYTABLE,file="SSS.dat",table=SSStable;
+setvars, table=SSStable,row= timeSlot;
+t0=time;
+
+! pseudoquads from LOCO calibration (3 April 2013 measurements; from file machine_parameters_3Apr.sdds):
+value, errorswitch;
+If (errorSwitch==1)
+{value, errorswitch;
+	READMYTABLE,file="QLerr_noDog.dat",table=QLerrtable;
+	setvars, table=QLerrtable,row= timeSlot;
+	READMYTABLE,file="QSerr_noDog.dat",table=QSerrtable;
+	setvars, table=QSerrtable,row= timeSlot;
+	READMYTABLE,file="SQLerr_noDog.dat",table=SQLerrtable;
+	setvars, table=SQLerrtable,row= timeSlot;
+	READMYTABLE,file="SQSerr_noDog.dat",table=SQSerrtable;
+	setvars, table=SQSerrtable,row= timeSlot;
+}
+/*****************************************************************************/
+
+KE0=.4;  											! injection kinetic energy (in GeV)
+KEext=8.0;  										! extraction kinetic energy (in GeV)
+pcInj = sqrt(( KE0+ pmass)*( KE0+ pmass)- pmass* pmass); 		 ! injection momentum
+pcExt = sqrt(( KEext+ pmass)*( KEext+ pmass)- pmass*pmass); 	 ! extraction momentum
+pc = (pcExt + pcInj)/2 - (pcExt - pcInj)/2 * cos(2*PI*15*(t0-2)/1000);		! momentum at chosen time point
+kpc=pcInj/pc;
+Brho= pc/ clight *1e9;  
+Brho0= pcInj/ clight *1e9;  
+ 
 call, file = './booster.ele';
 call, file = './booster.seq';
 
@@ -28,17 +74,18 @@ use, sequence = booster;
 
 /*********** define dispersion correctly (since MADX uses pt, not delta p, as 5th variable) *****/
 beta=sqrt(1-1/beam->gamma^2);
-dispx:=beta*table(twiss,dx); ! Delta_x=dispx*Delta_p/p;
-dispy:=beta*table(twiss,dy); ! Delta_y=dispy*Delta_p/p;
+dispx:=beta*table(twiss,dx); ! Delta_x=Dispx*Delta_p/p;
+dispy:=beta*table(twiss,dy); ! Delta_y=Dispy*Delta_p/p;
+/*****************************************************************************/
 
-PSHIFT=0;
 select, flag=twiss, clear;
-select, flag=twiss, column=name,s,l,tilt,angle,k1L,k2L,k1SL,k2SL,BETX,BETY,ALFX,ALFY,DX,DY,mux,muy,dispx,dispy;
+select, flag=twiss, column=name,s,l,tilt,angle,k1L,k2L,k1SL,k2SL,BETX,BETY,ALFX,ALFY,mux,muy,dispx,dispy;
 twiss , DELTAP = PSHIFT, refer=centre, table=TWISS, file='./booster.outx';
 
 plot, HAXIS=s,STYLE=100,SPLINE,
-      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=0,0,
-      VMAX=50,5,HMIN=0,HMAX=20,
-      TITLE="Booster Cell";
+      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=-20,0,
+      VMAX=40,15,
+      TITLE="Booster";
+!plot, vaxis=betx,bety,dispx haxis=s;
 
 STOP;
