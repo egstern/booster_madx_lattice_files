@@ -46,13 +46,13 @@ t0=time;
 value, errorswitch;
 If (errorSwitch==1)
 {value, errorswitch;
-	READMYTABLE,file="QLerr_noDog.dat",table=QLerrtable;
+	READMYTABLE,file="QLerr.dat",table=QLerrtable;
 	setvars, table=QLerrtable,row= timeSlot;
-	READMYTABLE,file="QSerr_noDog.dat",table=QSerrtable;
+	READMYTABLE,file="QSerr.dat",table=QSerrtable;
 	setvars, table=QSerrtable,row= timeSlot;
-	READMYTABLE,file="SQLerr_noDog.dat",table=SQLerrtable;
+	READMYTABLE,file="SQLerr.dat",table=SQLerrtable;
 	setvars, table=SQLerrtable,row= timeSlot;
-	READMYTABLE,file="SQSerr_noDog.dat",table=SQSerrtable;
+	READMYTABLE,file="SQSerr.dat",table=SQSerrtable;
 	setvars, table=SQSerrtable,row= timeSlot;
 }
 /*****************************************************************************/
