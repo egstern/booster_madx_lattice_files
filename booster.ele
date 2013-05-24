@@ -17,6 +17,7 @@ DMAG        : RBEND		, L = blength	, ANGLE = blength/rhod, K1 = qsd  , K2 = ssd;
 MKS02       : RBEND		, L = 1.080	   , ANGLE = 0 , TILT = pi/2; 
 MKS12       : RBEND		, L = 1.08     , ANGLE = 0 , TILT = pi/2;          ! vertical extraction kicker
 BEX         : RBEND		, L = 0.265    , TILT  = pi/2;                     ! BEX bump
+BEX2         : RBEND		, L = 0.265/2.    , TILT  = pi/2; 
 SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2;
 
 //---------------------- Corrector Package Elements ---------------------------------------------
@@ -24,11 +25,12 @@ DHZ    	    : HKICKER		, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;
 DVT       	: VKICKER		, L = 0.024 , CALIB = 0.000365 / 0.024 / Brho;      
 NQUAD       : QUADRUPOLE	, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
 ERRQUAD     : MULTIPOLE   ;        
-SQUAD  	    : QUADRUPOLE 	, L = 0.024 , CALIB = 0.003924 / 0.024 / Brho;        
+SQUAD  	    : QUADRUPOLE 	, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;        
 NSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045831 / 0.024 / Brho;      
 SSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;     
 BPM_1		: MONITOR		, L = 0.024 ;  
-
+//---------------------- O length monitor to be set in the middle of IBEX------------
+BPM_0   : MONITOR		, L = 0.;   
 //---------------------- Collimators   ---------------------------------------------
 COLL_P      : RCOLLIMATOR	, L := 0.0001	;        ! primary collimator
 COLL_SEC	: RCOLLIMATOR	, L := 0.6		;        ! secondary collimator
@@ -111,7 +113,7 @@ ENDSEQUENCE;
 
 //-----  Dogleg magnets     ---------------------------------------------------------
 L_DOG	 = 0.24722;
-L_DOG_FULL  :=  0.247221414912;         ! length along reference orbit (used in sequence definition to aviod negative drift space error)
+L_DOG_FULL  :=  0.247221414912;         ! length along reference orbit (used in sequence definition to avoid negative drift space error)
 DOG03_1a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344* I_DOGL03 / 180 *kpc/2	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
             E1 := -0.01172/2* I_DOGL03 / 180 *kpc	, E2 := 0.01172/2* I_DOGL03 / 180 *kpc	,
             K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
@@ -164,22 +166,27 @@ CPL03       : SEQUENCE, REFER=CENTRE, REFPOS = CPL03_START, L = 0.3;
  VL03            : DVT             , AT = 0.102,           VKICK := DVT->CALIB*I_VL03  ;
  QL03            : NQUAD           , AT = 0.126,           K1    := NQUAD->CALIB*I_QL03 ;
  QLERR03         : ERRQUAD         , AT = 0.138,           KNL  := {0, K_QLERR03}       ;
- BPML03          : BPM_1           , AT = 0.15; 
+!BPM renamed according to sketch: although it is in the regular corrector package
+!it get the "U" because upstream 
+! BPML03          : BPM_1           , AT = 0.15;
+ BPMLU3          : BPM_1           , AT = 0.15;
  QSL03           : SQUAD           , AT = 0.174,           K1S   := SQUAD->CALIB*I_SQL03;
  QSLERR03        : ERRQUAD         , AT = 0.186,           KSL  := {0, K_SQLERR03}      ;
  SXL03           : NSEXT           , AT = 0.198,           K2    := NSEXT->CALIB*I_SXL03;
  SSL03           : SSEXT           , AT = 0.222,           K2S   := SSEXT->CALIB*I_SSL03;
 ENDSEQUENCE;
 
-DOGLEG    : SEQUENCE, REFER = CENTRE, REFPOS = START_DOG, L = 4 * L_DOG_FULL + 2*.769 + 2*.474 + 1.524;
+!Dogleg magnets adjusted according to Kyiomi mail
+DOGLEG    : SEQUENCE, REFER = CENTRE, REFPOS = START_DOG, L = 4 * L_DOG_FULL + 2*.769 + 2*.474 + 1.524+(0.76878-0.7410432758);
  START_DOG:     MARKER       , AT = 0;
- DOG03_1                     , AT = L_DOG_FULL/2;
- CPL03                       , AT = L_DOG_FULL + 0.769 - 0.35;
- DOG03_2                     , AT = L_DOG_FULL + 0.769 + L_DOG_FULL/2;
- SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524/4;
- SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 3*1.524/4;
- DOG03_3                     , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524 + 0.474 + L_DOG_FULL/2;
- DOG03_4                     , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524 + 0.474 + L_DOG_FULL + 0.769 + L_DOG_FULL/2;
+ DOG03_1                     , AT = L_DOG_FULL/2;!s1
+ CPL03                       , AT = L_DOG_FULL + 0.234389484;
+ DOG03_2                     , AT = L_DOG_FULL + 0.769 + L_DOG_FULL/2 -0.000222086906;
+ SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524/4 -0.0435526371;
+ SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 3*1.524/4 -0.0435528755;
+ DOG03_3                     , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524 + 0.474 + L_DOG_FULL/2 + 0.0279567242;
+ DOG03_4                     , AT = 4 * L_DOG_FULL + 2*.769 + 2*.474 + 1.524-L_DOG_FULL/2+(0.76878-0.7410432758);
 ENDSEQUENCE;
+
 
 return;

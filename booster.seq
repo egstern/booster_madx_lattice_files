@@ -1,5 +1,5 @@
 option, no_fatal_stop;
-
+!the position of the center is specified
 BCEL01: SEQUENCE, REFER        =        CENTRE, REFPOS  =  START_1, L        = 19.7605393768;
  START_1         : MARKER          , AT = 0;
  HS24            : DHZ             , AT = 0.188,              HKICK := DHZ->CALIB*I_HS24   		;
@@ -81,16 +81,22 @@ BCEL03: SEQUENCE, REFER        =        CENTRE, REFPOS  =  START_3, L        = 1
  FMAGU03         : FMAG            , AT = 2.04511624358;
  DMAGU03         : DMAG            , AT = 5.43524744035;
  MARK2D          : MARKER          , AT = 6.88027132361;
- DOGLEG				   , AT = 7.19527132361;
+ DOGLEG				   , AT = 7.19527132361+0.03-(0.345-0.31505);
  !DOG03_1                           , AT = 7.318923101;
-  !DOG03_2                           , AT = 8.466924516;
+ !DOG03_2                           , AT = 8.466924516;
  !SEPT03                            , AT = 9.187675223;
  !SEPT03                            , AT = 9.949675223;
  !DOG03_3                           , AT = 11.07890593;
  !DOG03_4                           , AT = 12.09490735;
- IBEX03          : BEX             , AT = 12.549982;
- HP03L           : BPM_2           , AT = 12.736732;
- VP03L           : BPM_2           , AT = 12.831732;
+! IBEX03          : BEX             , AT = 12.549982;
+! BPML03          : BPM_1           , AT = 12.78082;
+ !HP03L           : BPM_2           , AT = 12.736732;
+ !VP03L           : BPM_2           , AT = 12.831732;
+!the monitor is not in Kiyomi data; I set it in the middle according to
+!Kent photo
+ IBEX031          : BEX2             ,AT = 12.549982-0.265/4.;
+ BPML03           : BPM_0           , AT = 12.549982;
+ IBEX032          : BEX2             ,AT = 12.549982+0.265/4.;
  DMAGD03         : DMAG            , AT = 14.3253008665;
  FMAGD03         : FMAG            , AT = 17.7154320633;
  MARK3           : MARKER          , AT = 19.7605304467;
@@ -188,11 +194,14 @@ BCEL06: SEQUENCE, REFER        =        CENTRE, REFPOS  =  START_6, L        = 1
  HALF_SP                           , AT = 3.865239627;
  DMAGU06         : DMAG            , AT = 5.4352531;
  MARK5D          : MARKER          , AT = 6.88027698326;
+ BPMLU6          : BPM_2           , AT = 7.01615334;!6.98065329;
  SHCOL1          : COLL_SEC        , AT = 7.379224;
  SVCOL1          : COLL_SEC        , AT = 10.179224;
  SHVCOL          : COLL_SEC        , AT = 11.079224;
- HP06L           : BPM_2           , AT = 11.936724;
- VP06L           : BPM_2           , AT = 12.031724;
+! HP06L           : BPM_2           , AT = 11.936724;
+! VP06L           : BPM_2           , AT = 12.031724;
+ HP06L           : OLDBPM           , AT = 11.936724;
+ VP06L           : OLDBPM           , AT = 12.031724;
  HL06            : DHZ             , AT = 12.472224,          HKICK := DHZ->CALIB*I_HL06  			;
  VL06            : DVT             , AT = 12.496224,          VKICK := DVT->CALIB*I_VL06  			;
  QL06            : NQUAD           , AT = 12.520224,          K1 	:= NQUAD->CALIB*I_QL06  			;
@@ -221,12 +230,13 @@ BCEL07: SEQUENCE, REFER        =        CENTRE, REFPOS  =  START_7, L        = 1
  FMAGU07         : FMAG            , AT = 2.04512190323;
  DMAGU07         : DMAG            , AT = 5.4352531;
  MARK6D          : MARKER          , AT = 6.88027698326;
+ BPMLU7          : BPM_2           , AT = 7.03520346;
  SHCOL2          : COLL_SEC        , AT = 8.179224;
  SVCOL2          : COLL_SEC        , AT = 10.179224;
  SEXL67          : SSXHARM6        , AT = 11.139224;
  SEXL47          : SXHARM4         , AT = 11.589224;
- HP07L           : BPM_2           , AT = 11.936724;
- VP07L           : BPM_2           , AT = 12.031724;
+ HP07L           : OLDBPM          , AT = 11.936724;
+ VP07L           : OLDBPM          , AT = 12.031724;
  HL07            : DHZ             , AT = 12.472224,          HKICK := DHZ->CALIB*I_HL07  			;
  VL07            : DVT             , AT = 12.496224,          VKICK := DVT->CALIB*I_VL07   			;
  QL07            : NQUAD           , AT = 12.520224,          K1 	:= NQUAD->CALIB*I_QL07  			;
@@ -642,6 +652,7 @@ BCEL20: SEQUENCE, REFER        =        CENTRE, REFPOS  =  START_20, L        = 
  FMAGU20         : FMAG            , AT = 2.04512190323;
  DMAGU20         : DMAG            , AT = 5.4352531;
  MARK19D         : MARKER          , AT = 6.88027698326;
+ RPOS            : RPOS_MON        , AT = 7.0;
  OCT                               , AT = 7.289224;
  OCT                               , AT = 7.719224;
  OCT                               , AT = 8.149224;
