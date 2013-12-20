@@ -24,8 +24,10 @@ SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2;
 DHZ    	    : HKICKER		, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
 DVT       	: VKICKER		, L = 0.024 , CALIB = 0.000365 / 0.024 / Brho;      
 NQUAD       : QUADRUPOLE	, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
-ERRQUAD     : MULTIPOLE   ;        
-SQUAD  	    : QUADRUPOLE 	, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;        
+ERRQUAD     : MULTIPOLE   ; 
+skew_err_sign=-1; 
+SQUAD  	    : QUADRUPOLE 	, L = 0.024 , TILT = 0.78539816, CALIB = 0.003924 / 0.024 / Brho;!Alexey    
+!SQUAD  	    : QUADRUPOLE 	, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;!Alexey  
 NSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045831 / 0.024 / Brho;      
 SSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;     
 BPM_1		: MONITOR		, L = 0.024 ;  
@@ -170,8 +172,8 @@ CPL03       : SEQUENCE, REFER=CENTRE, REFPOS = CPL03_START, L = 0.3;
 !it get the "U" because upstream 
 ! BPML03          : BPM_1           , AT = 0.15;
  BPMLU3          : BPM_1           , AT = 0.15;
- QSL03           : SQUAD           , AT = 0.174,           K1S   := SQUAD->CALIB*I_SQL03;
- QSLERR03        : ERRQUAD         , AT = 0.186,           KSL  := {0, K_SQLERR03}      ;
+ QSL03           : SQUAD           , AT = 0.174,           K1 := SQUAD->CALIB*I_SQL03;
+ QSLERR03        : ERRQUAD         , AT = 0.186,           KSL  := {0, skew_err_sign*K_SQLERR03}      ;
  SXL03           : NSEXT           , AT = 0.198,           K2    := NSEXT->CALIB*I_SXL03;
  SSL03           : SSEXT           , AT = 0.222,           K2S   := SSEXT->CALIB*I_SSL03;
 ENDSEQUENCE;
