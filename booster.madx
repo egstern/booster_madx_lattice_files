@@ -19,14 +19,15 @@
 
    IMPORTANT!!!!! For LOCO fitting, timeSlot must be set to 1 because there there will only be 1 data line in QL*.dat, QS*.dat etc.
 ***************************/
+errorSwitch=1;
+isLOCO=1;
+
 if(isLOCO==1){
   timeSlot=1;
 }
 else {
   timeSlot=3; // user selected time slot
 }
-errorSwitch=1;
-isLOCO=1;
 /*****************************************************************************/
 
 /************ read in settings for corrector package magnets, dogleg, and pseudo-quad errors from tables: ***************************/
