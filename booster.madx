@@ -4,72 +4,61 @@
  ! Pseudo-quad errors from LOCO analysis of 3/4/13 ORM measurement have been added -MM
  ! Dogleg layout has been altered to match drawing of layout -MM
  ! Note: layout of dogleg magnet (particularly location of U3L bpm) still needs to be verified by copmassarison with survey data -MM
- ! Eliana has corrected dogleg layout on the basis of Kyiomi layout
- ! Added in switches for LOCO -- cytan
+ !I changed booster.seq from sequence to line mode in order to put drift in between elements for now. The problem of current file was
+ !that all elements were set on a beam trajectory which had a fixed length. If the bending current was changed, the position of 
+ !the element center was not moved in the trajectory and the length of drifts before and after the element were adjusted automatically. 
+ !I'll change the  booster.seq file to sequence mode with arbitrary arc length later. It should not make any change on twiss output.  04/08/14 -K.Seiya
 
  option, -echo, warn, info;
  set,  format="20.10f";
  !option, RBARC=false;
 
  
-/**********
-   choose time in acceleration rapmass to use by choosing a "slot" on the magnet setting table (ie QL.dat table):
-   set errorSwicth=1 if error tables are needed to be used.
-   set isLOCO = 1 if this file is used for LOCO fitting.
-
-   IMPORTANT!!!!! For LOCO fitting, timeSlot must be set to 1 because there there will only be 1 data line in QL*.dat, QS*.dat etc.
-***************************/
+/********** choose time in acceleration rapmass to use by choosing a "slot" on the magnet setting table (ie QL.dat table): ***************************/
+timeSlot=3;
 errorSwitch=1;
-isLOCO=1;
-
-if(isLOCO==1){
-  timeSlot=1;
-}
-else {
-  timeSlot=3; // user selected time slot
-}
 /*****************************************************************************/
+
 
 /************ read in settings for corrector package magnets, dogleg, and pseudo-quad errors from tables: ***************************/
 
 ! strength of doglegs, harmonic correctors, and other DC elements:
-READMYTABLE,file="DC.dat",table=DCtable;
-setvars, table=DCtable,row= 1;
-value, i_DOGL03;
+!!READMYTABLE,file="DC.dat",table=DCtable;
+!!setvars, table=DCtable,row= 1;
+!!value, i_DOGL03;
 
-! strengths of corrector package elements:
-READMYTABLE,file="QL.dat",table=QLtable;
-setvars, table=QLtable,row= timeSlot;
-READMYTABLE,file="QS.dat",table=QStable;
-setvars, table=QStable,row= timeSlot;
-READMYTABLE,file="SQL.dat",table=SQLtable;
-setvars, table=SQLtable,row= timeSlot;
-READMYTABLE,file="SQS.dat",table=SQStable;
-setvars, table=SQStable,row= timeSlot;
-READMYTABLE,file="SXL.dat",table=SXLtable;
-setvars, table=SXLtable,row= timeSlot;
-READMYTABLE,file="SXS.dat",table=SXStable;
-setvars, table=SXStable,row= timeSlot;
-READMYTABLE,file="SSL.dat",table=SSLtable;
-setvars, table=SSLtable,row= timeSlot;
-READMYTABLE,file="SSS.dat",table=SSStable;
-setvars, table=SSStable,row= timeSlot;
-t0=time;
-value, t0;
+! strengths of corrector package elements (as set for 3 April 2013 measurements; from file 3Apr_newSkew_Settings.txt):
+!READMYTABLE,file="QL.dat",table=QLtable;
+!!setvars, table=QLtable,row= timeSlot;
+!!READMYTABLE,file="QS.dat",table=QStable;
+!!setvars, table=QStable,row= timeSlot;
+!!READMYTABLE,file="SQL.dat",table=SQLtable;
+!!setvars, table=SQLtable,row= timeSlot;
+!!READMYTABLE,file="SQS.dat",table=SQStable;
+!!setvars, table=SQStable,row= timeSlot;
+!!READMYTABLE,file="SXL.dat",table=SXLtable;
+!!setvars, table=SXLtable,row= timeSlot;
+!!READMYTABLE,file="SXS.dat",table=SXStable;
+!!setvars, table=SXStable,row= timeSlot;
+!!READMYTABLE,file="SSL.dat",table=SSLtable;
+!!setvars, table=SSLtable,row= timeSlot;
+!!READMYTABLE,file="SSS.dat",table=SSStable;
+!!setvars, table=SSStable,row= timeSlot;
+!!t0=time;
 
-! pseudoquads from LOCO calibration:
-value, errorswitch;
-If (errorSwitch==1)
-{value, errorswitch;
-	READMYTABLE,file="QLerr.dat",table=QLerrtable;
-	setvars, table=QLerrtable,row= timeSlot;
-	READMYTABLE,file="QSerr.dat",table=QSerrtable;
-	setvars, table=QSerrtable,row= timeSlot;
-	READMYTABLE,file="SQLerr.dat",table=SQLerrtable;
-	setvars, table=SQLerrtable,row= timeSlot;
-	READMYTABLE,file="SQSerr.dat",table=SQSerrtable;
-	setvars, table=SQSerrtable,row= timeSlot;
-}
+! pseudoquads from LOCO calibration (3 April 2013 measurements; from file machine_parameters_3Apr.sdds):
+!!value, errorswitch;
+!!If (errorSwitch==1)
+!!{value, errorswitch;
+!!	READMYTABLE,file="QLerr.dat",table=QLerrtable;
+!!	setvars, table=QLerrtable,row= timeSlot;
+!!	READMYTABLE,file="QSerr.dat",table=QSerrtable;
+!!	setvars, table=QSerrtable,row= timeSlot;
+!!	READMYTABLE,file="SQLerr.dat",table=SQLerrtable;
+!!	setvars, table=SQLerrtable,row= timeSlot;
+!!	READMYTABLE,file="SQSerr.dat",table=SQSerrtable;
+!!	setvars, table=SQSerrtable,row= timeSlot;
+!!}
 /*****************************************************************************/
 
 KE0=.4;  											! injection kinetic energy (in GeV)
@@ -81,14 +70,11 @@ kpc=pcInj/pc;
 Brho= pc/ clight *1e9;  
 Brho0= pcInj/ clight *1e9;  
  
-call, file = 'booster.ele';
-call, file = 'booster.seq';
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!! corrector:
-!I_HS24 = 0.05;
+call, file = './booster.ele';
+call, file = './booster.seq';
 
 beam, particle = PROTON, pc= pc;  
-use, sequence = booster;
+use, period = booster;
 
 /*********** define dispersion correctly (since MADX uses pt, not delta p, as 5th variable) *****/
 beta=sqrt(1-1/beam->gamma^2);
@@ -96,86 +82,14 @@ dispx:=beta*table(twiss,dx); ! Delta_x=Dispx*Delta_p/p;
 dispy:=beta*table(twiss,dy); ! Delta_y=Dispy*Delta_p/p;
 /*****************************************************************************/
 
+select, flag=twiss, clear;
+select, flag=twiss, column=name,s,l,tilt,angle,k1L,k2L,k1SL,k2SL,BETX,BETY,ALFX,ALFY,mux,muy,dispx,dispy;
+twiss , DELTAP = PSHIFT, refer=centre, table=TWISS, file='./booster.outx';
 
-If (isLOCO==1) {
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,tilt,angle,X,PX,Y,PY,PT,k1L,k2L,k1SL,k2SL,BETX,BETY,ALFX,ALFY,mux,muy,dispx,dispy;
-  twiss, DELTAP = PSHIFT, refer=centre, table=TWISS, file='twiss.outx';
-
-  X0  = table(twiss,BOOSTER$START,X );
-  PX0 = table(twiss,BOOSTER$START,PX);
-  Y0  = table(twiss,BOOSTER$START,Y );
-  PY0 = table(twiss,BOOSTER$START,PY);
-  PT0 = table(twiss,BOOSTER$START,PT);
-
-  dX = 1e-4; dPX = 0.5e-5;
-  dY = 1e-4; dPY = 1e-5;
-  dPT = 0.5e-4;
-
-  value, X0, PX0, Y0, PY0, PT0, dX, dPX, dY, dPY, dPT;
-
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,X,PX,Y,PY;
-  twiss, X=X0+dX, PX=PX0, Y=Y0, PY=PY0, PT=PT0, DELTAP = PSHIFT, refer=centre, table=TWISS, file='r_dX.outx';
-
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,X,PX,Y,PY;
-  twiss, X=X0, PX=PX0+dPX, Y=Y0, PY=PY0, PT=PT0, DELTAP = PSHIFT, refer=centre, table=TWISS, file='r_dPX.outx';
-
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,X,PX,Y,PY;
-  twiss, X=X0, PX=PX0, Y=Y0+dY, PY=PY0, PT=PT0, DELTAP = PSHIFT, refer=centre, table=TWISS, file='r_dY.outx';
-
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,X,PX,Y,PY;
-  twiss, X=X0, PX=PX0, Y=Y0, PY=PY0+dPY, PT=PT0, DELTAP = PSHIFT, refer=centre, table=TWISS, file='r_dPY.outx';
-
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,X,PX,Y,PY;
-  twiss, X=X0, PX=PX0, Y=Y0, PY=PY0, PT=PT0+dPT, DELTAP = PSHIFT, refer=centre, table=TWISS, file='r_dPT.outx';
-}
-else {
-  select, flag=twiss, clear;
-  select, flag=twiss, column=name,s,l,tilt,angle,k1L,k2L,k1SL,k2SL,BETX,BETY,ALFX,ALFY,mux,muy,dispx,dispy;
-  twiss , DELTAP = PSHIFT, refer=centre, table=TWISS, file='./booster.outx';
-
-  plot, HAXIS=s,SPLINE,
-        VAXIS1=betx,bety,VAXIS2=dispx,VMIN=-20,0,
-        VMAX=40,15,
-	STYLE=1,
-	COLOUR=100,
-        TITLE="Booster";
-  !plot, vaxis=betx,bety,dispx haxis=s;
-
-}
-
-!plot, file="results/twiss",HAXIS=s,STYLE=100,SPLINE,
-!      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=-20,0,
-!      VMAX=40,15,
-!      TITLE="Booster";
-
+plot, HAXIS=s,STYLE=100,SPLINE,
+      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=-20,0,
+      VMAX=40,15,
+      TITLE="Booster";
 !plot, vaxis=betx,bety,dispx haxis=s;
-
-!ptc_create_universe;
-!ptc_create_layout,model=2,method=6,nst=10,exact;
-!
-!ptc_start, x= 3e-3, px=0, y= 3e-3, py=0;
-!ptc_start, x= 6e-3, px=0, y= 6e-3, py=0;
-!ptc_start, x= 9e-3, px=0, y= 9e-3, py=0;
-!ptc_start, x=12e-3, px=0, y=12e-3, py=0;
-!ptc_start, x=15e-3, px=0, y=15e-3, py=0;
-!ptc_start, x=18e-3, px=0, y=18e-3, py=0; 
-!
-!ptc_track,icase=4,closed_orbit,dump,  
-!       turns=1000 ,ffile=1; //onetable, turns=3, norm_no=4; norm_out
-!
-!plot, file="results/fv9_1_START",table=track,haxis=x,vaxis=px,
-!      particle=1,2,3,4,5,6, colour=1000, multiple, symbol=3;
-!plot, file="results/fv9_1_START",table=track,haxis=y,vaxis=py,
-!      particle=1,2,3,4,5,6, colour=1000, multiple, symbol=3;
-!
-!ptc_track_end;
-!ptc_end;
-!stop;
 
 STOP;
