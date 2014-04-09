@@ -23,7 +23,7 @@ MKS12       : RBEND		, L = 1.08     , ANGLE = 0 , TILT = pi/2;          ! vertic
 BEX         : RBEND		, L = 0.265    , TILT  = pi/2;                     ! BEX bump
 BEX2         : RBEND		, L = 0.265/2.    , TILT  = pi/2; 
 BEX3         : RBEND		, L = 0.33    , TILT  = pi/2; 
-SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2;
+SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2, E1=-0.00000001/2., E2=-0.00000001/2.;
 
 //---------------------- Corrector Package Elements ---------------------------------------------
 DHZ    	    : HKICKER		, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
