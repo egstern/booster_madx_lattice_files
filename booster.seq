@@ -12,17 +12,17 @@ option, no_fatal_stop;
 !MINS 
  DMAGU01         : DMAG            ;
  MARK24D         : MARKER          ;
- L01A		 : DRIFT, L=0.055;
+ L01A		 : DRIFT, L=0.55885;
 !ORBUMP_1                          ;
- L01B		 : DRIFT, L=2.00655;
+ L01B		 : DRIFT, L=1.8177/cos(2.0*angle_orbump);
 !ORBUMP_2                          ;
- L01C		 : DRIFT, L=0.179;
+ L01C		 : DRIFT, L=0.25835/cos(2.0*angle_orbump);
 ! FOIL                              ;
- L01D		 : DRIFT, L=0.9608;
+ L01D		 : DRIFT, L=1.0655/cos(2.0*angle_orbump);
 !CPL01 :    line=(HL01,VL01,QL01,QLERR01,BPML01,QSL01,QSLERR01,SXL01,SSL01);
- L01E		 : DRIFT, L=0.82975;
+ L01E		 : DRIFT, L=0.32485/cos(2.0*angle_orbump);
 !ORBUMP_4                          ;
- L01F		 : DRIFT, L=0.353;
+ L01F		 : DRIFT, L=0.35885;
  DMAGD01         : DMAG            ;
 !MINS 
  FMAGD01         : FMAG            ;
@@ -58,7 +58,7 @@ BCEL01: LINE=(START_1,SA,CPS24,SB,FMAGU01,MINS,DMAGU01,MARK24D,L01A,ORBUMP_1,L01
  VP02L           : OLDBPM          ;
  L02G		 : DRIFT, L=0.066;
 !CPL02 :    line=(HL02,VL02,QL02,QLERR02,BPML02,QSL02,QSLERR02,SXL02,SSL02);
- L02H		 : DRIFT, L=0.22;
+  L02H		 : DRIFT, L=0.22;
  DMAGD02         : DMAG            ;
 !MINIS
  FMAGD02         : FMAG            ;
@@ -80,16 +80,16 @@ BCEL02: LINE=(START_2,SA,CPS02,SB,FMAGU02,MINS,DMAGU02,MARK1D,L02A,MKS02,L02B,MK
  MARK2D          : MARKER          ;
  L03A		 : DRIFT, L=0.31505;			   ;
 !DOG03_1                         
- L03B		 : DRIFT, L=0.30039;
+ L03B		 : DRIFT, L=0.30039/cos(2*angle_dogleg);
 !CPL03 :    line=(HL03,VL03,QL03,QLERR03,BPMLU3,QSL03,QSLERR03,SXL03,SSL03);
- L03C		 : DRIFT, L=0.30039;
+ L03C		 : DRIFT, L=0.30039/cos(2*angle_dogleg);
 !DOG03_2                          
  L03D		 : DRIFT, L=0.43067;
 !SEPT03                            
 !SEPT03                           
  L03E		 : DRIFT, L=0.54551;
 !DOG03_3                          
- L03F		 : DRIFT, L=0.76878;
+ L03F		 : DRIFT, L=0.76878/cos(2*angle_dogleg);
 !DOG03_4                           
  L03G		 : DRIFT, L=0.2;
  IBEX03          : BEX3             ;
@@ -184,7 +184,7 @@ BCEL04: LINE=(START_4,SA,CPS03,SB,FMAGU04,MINS,DMAGU04,MARK3D,L04A,SEXTL,L04B,SE
 !SC
  MARK5           : MARKER          ;
 
-BCEL05:line=(sa,CPS04,sb,fmagu05,minS,dmagu05,MARK4d,L05a,Sexl75,L05b,Sexl55,L05c,IPMh,L05d,IPMv,L05e, VPINGER,HPINGER,HP05L,VP05L,L05f,CPL05,L05g,dmagd05,half_sp,Prim_H,half_sp,fmagd05,sc,MARK5);
+BCEL05:line=(START_5,sa,CPS04,sb,fmagu05,minS,dmagu05,MARK4d,L05a,Sexl75,L05b,Sexl55,L05c,IPMh,L05d,IPMv,L05e, VPINGER,HPINGER,HP05L,VP05L,L05f,CPL05,L05g,dmagd05,half_sp,Prim_H,half_sp,fmagd05,sc,MARK5);
 
 /*--------------------*/
 /*BCEL06              */
@@ -220,7 +220,7 @@ BCEL05:line=(sa,CPS04,sb,fmagu05,minS,dmagu05,MARK4d,L05a,Sexl75,L05b,Sexl55,L05
 !SC
  MARK6           : MARKER          ;
 
-bcel06:  line=(sa,CPS05,sb,fmagu06,half_sp,Prim_V,half_sp,dmagu06,MARK5d,L06a,BPMLU6,SHCOL1,L06b,SVCOL1,L06c,SHVCOL,L06d,HP06L,VP06L,L06e,CPL06,L06f,dmagd06,minS,fmagd06,sc,MARK6);
+bcel06:  line=(START_6,sa,CPS05,sb,fmagu06,half_sp,Prim_V,half_sp,dmagu06,MARK5d,L06a,BPMLU6,SHCOL1,L06b,SVCOL1,L06c,SHVCOL,L06d,HP06L,VP06L,L06e,CPL06,L06f,dmagd06,minS,fmagd06,sc,MARK6);
 
 
 
@@ -256,7 +256,7 @@ bcel06:  line=(sa,CPS05,sb,fmagu06,half_sp,Prim_V,half_sp,dmagu06,MARK5d,L06a,BP
 !SC
  MARK7           : MARKER          ;
 
-bcel07:   line=(sa,CPS06,sb,fmagu07,minS,dmagu07,MARK6d L07a,BPMLU7,SHCOL2,L07b,SVCOL2,L07c,Sexl67,L07d,Sexl47,L07e,HP07L,VP07L,L07f,CPL07,L07g,dmagd07,minS,fmagd07,sc,MARK7);
+bcel07:   line=(START_7,sa,CPS06,sb,fmagu07,minS,dmagu07,MARK6d L07a,BPMLU7,SHCOL2,L07b,SVCOL2,L07c,Sexl67,L07d,Sexl47,L07e,HP07L,VP07L,L07f,CPL07,L07g,dmagd07,minS,fmagd07,sc,MARK7);
 
 /*--------------------*/
 /*BCEL08              */
@@ -297,7 +297,7 @@ bcel07:   line=(sa,CPS06,sb,fmagu07,minS,dmagu07,MARK6d L07a,BPMLU7,SHCOL2,L07b,
  FMAGD08         : FMAG            ;
  MARK8           : MARKER          ;
 
-bcel08:  line=(sa,CPS07,sb,fmagu08,minS,dmagu08,MARK7d,L08a,SEXTL,L08b,SEXTL,L08c,Sexl78,L08d,Sexl58,L08e,SEXTL,L08f,Oct,L08g,Oct,L08h,Oct,L08i,Oct,L08j,HP08L,VP08L,L08k,CPL08,L08l,dmagd08,minS,fmagd08,sc,MARK8);
+bcel08:  line=(START_8,sa,CPS07,sb,fmagu08,minS,dmagu08,MARK7d,L08a,SEXTL,L08b,SEXTL,L08c,Sexl78,L08d,Sexl58,L08e,SEXTL,L08f,Oct,L08g,Oct,L08h,Oct,L08i,Oct,L08j,HP08L,VP08L,L08k,CPL08,L08l,dmagd08,minS,fmagd08,sc,MARK8);
 
 
 
@@ -326,7 +326,7 @@ bcel08:  line=(sa,CPS07,sb,fmagu08,minS,dmagu08,MARK7d,L08a,SEXTL,L08b,SEXTL,L08
 !SC
  MARK9           : MARKER          ;
 
-bcel09:   line=(sa,CPS08,sb,fmagu09,minS,dmagu09,MARK8d,L09a,HP09,VP09,HOR_DAMP,L09b,CPL09,L09c,dmagd09,minS,fmagd09,sc,MARK9);
+bcel09:   line=(START_9,sa,CPS08,sb,fmagu09,minS,dmagu09,MARK8d,L09a,HP09,VP09,HOR_DAMP,L09b,CPL09,L09c,dmagd09,minS,fmagd09,sc,MARK9);
 
 
 /*--------------------*/
@@ -357,7 +357,7 @@ bcel09:   line=(sa,CPS08,sb,fmagu09,minS,dmagu09,MARK8d,L09a,HP09,VP09,HOR_DAMP,
  FMAGD10         : FMAG            ;
  MARK10          : MARKER          ;
 
-bcel10:  line=(sa,CPS09,sb,fmagu10,minS,dmagu10,MARK9d L10a,SEX_disc,L10b,SEX_disc,L10c,SEX_disc,L10d,HP10L,VP10L,L10e,CPL10,L10f,dmagd10,minS,fmagd10,sc,MARK10);
+bcel10:  line=(START_10,sa,CPS09,sb,fmagu10,minS,dmagu10,MARK9d L10a,SEX_disc,L10b,SEX_disc,L10c,SEX_disc,L10d,HP10L,VP10L,L10e,CPL10,L10f,dmagd10,minS,fmagd10,sc,MARK10);
 
 
 
@@ -387,7 +387,7 @@ bcel10:  line=(sa,CPS09,sb,fmagu10,minS,dmagu10,MARK9d L10a,SEX_disc,L10b,SEX_di
 !SC
  MARK11          : MARKER          ;
 
-bcel11:   line=(sa,CPS10,sb,fmagu11,minS,dmagu11,MARK10d,L11a,VER_DAMP,L11b,PICK_UP,L11c,HP11L,VP11L,L11d,CPL11,L11e,dmagd11,minS,fmagd11,sc,MARK11);
+bcel11:   line=(START_11,sa,CPS10,sb,fmagu11,minS,dmagu11,MARK10d,L11a,VER_DAMP,L11b,PICK_UP,L11c,HP11L,VP11L,L11d,CPL11,L11e,dmagd11,minS,fmagd11,sc,MARK11);
 
 
 /*--------------------*/
@@ -421,7 +421,7 @@ bcel11:   line=(sa,CPS10,sb,fmagu11,minS,dmagu11,MARK10d,L11a,VER_DAMP,L11b,PICK
  FMAGD12         : FMAG            ;
  MARK12          : MARKER          ;
 
-bcel12:  line=(sa,CPS11,sb,fmagu12,minS,dmagu12,MARK11d,L12a,MKS12,L12b,MKS12,L12c,Ibex12,L12d,MKS12,L12e,MKS12,L12f,HP12L,VP12L,L12G,CPL12,L12H,dmagd12,minS,fmagd12,sc,MARK12);
+bcel12:  line=(START_12,sa,CPS11,sb,fmagu12,minS,dmagu12,MARK11d,L12a,MKS12,L12b,MKS12,L12c,Ibex12,L12d,MKS12,L12e,MKS12,L12f,HP12L,VP12L,L12G,CPL12,L12H,dmagd12,minS,fmagd12,sc,MARK12);
 
 
 /*--------------------*/
@@ -444,7 +444,7 @@ bcel12:  line=(sa,CPS11,sb,fmagu12,minS,dmagu12,MARK11d,L12a,MKS12,L12b,MKS12,L1
 !SC
  MARK13          : MARKER          ;
 
-bcel13:   line=(sa,CPS12,sb,fmagu13,minS,dmagu13,MARK12d,L13a,CPL13,L13b,dmagd13,minS,fmagd13,sc,MARK13);
+bcel13:   line=(START_13,sa,CPS12,sb,fmagu13,minS,dmagu13,MARK12d,L13a,CPL13,L13b,dmagd13,minS,fmagd13,sc,MARK13);
 
 /*--------------------*/
 /*BCEL14             */
@@ -472,6 +472,7 @@ bcel13:   line=(sa,CPS12,sb,fmagu13,minS,dmagu13,MARK12d,L13a,CPL13,L13b,dmagd13
  FMAGD14         : FMAG            ;
 !SC
  MARK14          : MARKER          ;
+
 
 BCEL14: LINE=(START_14,SA,CPS13,SB,FMAGU14,MINS,DMAGU14,MARK13D,L14A,RF01,L14B,RF02,L14C,HP14L,VP14L,L14D,CPL14,L14E,DMAGD14,MINS,FMAGD14,SC,MARK14);
 
@@ -581,7 +582,7 @@ BCEL17: LINE=(START_17,SA,CPS16,SB,FMAGU17,MINS,DMAGU17,MARK16D,L17A,RF07,L17B,R
  L18A		 : DRIFT, L=0.21;
  RF19		 : BRF;
  L18B		 : DRIFT, L=0.12;
- L18C		 : DRIFT, L=2.35;
+ L18C 		 : DRIFT, L=2.35;
  L18D		 : DRIFT, L=0.25;
  HP18L           : OLDBPM          ;
  VP18L           : OLDBPM          ;
@@ -617,16 +618,7 @@ BCEL18: LINE=(START_18,SA,CPS17,SB,FMAGU18,MINS,DMAGU18,MARK17D,L18A,RF19,L18B,L
  HP19L           : OLDBPM          ;
  VP19L           : OLDBPM          ;
  L19D		 : DRIFT, L=0.111;
- HL19            : DHZ             ,          HKICK := DHZ->CALIB*I_HL19   			;
- VL19            : DVT             ,          VKICK := DVT->CALIB*I_VL19   			;
- QL19            : NQUAD           ,          K1 	:= NQUAD->CALIB*I_QL19  			;
- QLERR19         : ERRQUAD         ,          KNL 	:= {0, K_QLERR19  			};
- BPML19          : BPM_1           ;
- QSL19           : SQUAD           ,          K1S 	:= SQUAD->CALIB*I_SQL19  			;
- QSLERR19        : ERRQUAD         ,          KSL 	:= {0, K_SQLERR19  			};
- SXL19           : NSEXT           ,          K2 	:= NSEXT->CALIB*I_SXL19   		;
- SSL19           : SSEXT           ,          K2S 	:= SSEXT->CALIB*I_SSL19   		;
-CPL19 :    line=(HL19,VL19,QL19,QLERR19,BPML19,QSL19,QSLERR19,SXL19,SSL19); 
+!CPL19 :    line=(HL19,VL19,QL19,QLERR19,BPML19,QSL19,QSLERR19,SXL19,SSL19); 
  L19E		 : DRIFT, L=0.251;
  DMAGD19         : DMAG            ;
 !MINS
@@ -789,9 +781,9 @@ BCEL23: LINE=(START_23,SA,CPS22,SB,FMAGU23,MINS,DMAGU23,MARK22D,L23A,RF13,L23B,R
 BCEL24: LINE=(START_24,SA,CPS23,SB,FMAGU24,MINS,DMAGU24,MARK23D,L24A,RF15,L24B,RF16,L24C,HP24L,VP24L,L24D,CPL24,L24E,DMAGD24,MINS,FMAGD24,SC,MARK24);
 
 
-booster: LINE=(BCEL01,BCEL02,BCEL03,BCEL04,BCEL05,BCEL06,BCEL07,BCEL08,BCEL09,BCEL10,BCEL11,BCEL12,BCEL13,BCEL14,BCEL15,BCEL16,BCEL17,BCEL18,BCEL19,BCEL20,BCEL21, BCEL22,BCEL23,BCEL24);
+booster: LINE=(BCEL01, BCEL02, BCEL03, BCEL04,BCEL05, BCEL06, BCEL07, BCEL08,BCEL09, BCEL10, BCEL11, BCEL12,BCEL13, BCEL14, BCEL15, BCEL16,BCEL17, BCEL18, BCEL19, BCEL20,BCEL21, BCEL22, BCEL23, BCEL24);
 
-!booster: LINE=(24*BCEL24);
+!booster: LINE=(24*BCEL03);
 
 
 

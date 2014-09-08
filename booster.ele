@@ -23,17 +23,36 @@ MKS12       : RBEND		, L = 1.08     , ANGLE = 0 , TILT = pi/2;          ! vertic
 BEX         : RBEND		, L = 0.265    , TILT  = pi/2;                     ! BEX bump
 BEX2         : RBEND		, L = 0.265/2.    , TILT  = pi/2; 
 BEX3         : RBEND		, L = 0.33    , TILT  = pi/2; 
-SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2, E1=-0.00000001/2., E2=-0.00000001/2.;
+SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2, E1=-0,00000001/2., E2=-0,00000001/2.;
 
 //---------------------- Corrector Package Elements ---------------------------------------------
-DHZ    	    : HKICKER		, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
-DVT       	: VKICKER		, L = 0.024 , CALIB = 0.000365 / 0.024 / Brho;      
-NQUAD       : QUADRUPOLE	, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
+DHZ    	    : HKICKER			, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
+DVT         : VKICKER			, L = 0.024 , CALIB = 0.000365 / 0.024 / Brho;      
+NQUAD       : QUADRUPOLE		, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
 ERRQUAD     : MULTIPOLE   ;        
-SQUAD  	    : QUADRUPOLE 	, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;        
-NSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045831 / 0.024 / Brho;      
-SSEXT       : SEXTUPOLE	    , L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;     
-BPM_1		: MONITOR		, L = 0.024 ;  
+SQUAD  	    : QUADRUPOLE 		, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;        
+NSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 0.045831 / 0.024 / Brho;      
+SSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;     
+BPM_1	    : MONITOR			, L = 0.024 ;  
+
+//---------------------- Corrector Package Elements ---------------------------------------------
+DHZ_L1    	: HKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000366 / 0.024 / Brho;         
+DVT_L1       	: VKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000365 / 0.024 / Brho;      
+NQUAD_L1        : QUADRUPOLE		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.002489 / 0.024 / Brho;        
+SQUAD_L1  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_orbump) , CALIB = -0.003924 / 0.024 / Brho;        
+NSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 0.045831 / 0.024 / Brho;      
+SSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 0.045477 / 0.024 / Brho;     
+BPM_1_L1        : MONITOR		, L = 0.024/cos(2*angle_orbump) ;  
+
+//---------------------- Corrector Package Elements ---------------------------------------------
+DHZ_L3    	: HKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000366 / 0.024 / Brho;         
+DVT_L3       	: VKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000365 / 0.024 / Brho;      
+NQUAD_L3        : QUADRUPOLE		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.002489 / 0.024 / Brho;             
+SQUAD_L3  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_dogleg) , CALIB = -0.003924 / 0.024 / Brho;        
+NSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.045831 / 0.024 / Brho;      
+SSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.045477 / 0.024 / Brho;     
+BPM_1_L3        : MONITOR		, L = 0.024/cos(2*angle_dogleg) ;  
+
 //---------------------- O length monitor to be set in the middle of IBEX------------
 BPM_0   : MONITOR		, L = 0.;   
 //---------------------- Collimators   ---------------------------------------------
@@ -44,7 +63,7 @@ PRIM_H      : RCOLLIMATOR	, L := 0.0001	;
 PRIM_V      : RCOLLIMATOR	, L := 0.0001	;
 
 //---------------------- Instrumentation        ---------------------------------------------
-FOIL		: INSTRUMENT	, L := 0.001;        ! injection stripping foil
+FOIL		: INSTRUMENT	, L := 0.001/cos(2*angle_orbump);        ! injection stripping foil
 IPM         : INSTRUMENT	, L = 0.3;
 RPOS_MON	: MONITOR		, L = 0.1;
 BPM_2		: MONITOR		, L = 0.095;          ! "upstream" (currently functioning) bpms in sections 3, 6, 7
@@ -83,29 +102,41 @@ SC	    : DRIFT		, L = 0.6;
 SEPTU03     : RBEND	, L = 1.524/2, ANGLE = 0.00000001, TILT = pi/2	;    !  septum, extraction to MI-8
 
 //-----  Orbump         -----------------------------------------------------
-L_ORB       = 0.4823;
+angle_orbump = 0.0011; ! angle_orbump != 0
+angle_orbump_2 = 0.0022; ! angle_orbump != 0
+
+L_ORB       = 0.4823;!rbend;
+L1_ORB       = L_ORB*angle_orbump*2/sin(angle_orbump*2);!sbend
+
 IF (t0 < 2.05) {korbump = 1;}
 ELSE {korump = 0;}              ! orbump is only on for ~ 50 microsecs after injection
 value, korbump;
 
-ORBUMPa_1  : RBEND , L = L_ORB/2   , ANGLE = -0.011*korbump    ,    !  half of outer orbit bump magnet (injection)
-          E1 = 0.011*korbump/2  , E2 = 0.011*korbump/2     , 
+ORBUMPa_1_u  : SBEND , L = L1_ORB/2   , ANGLE = -1.0*angle_orbump*korbump    ,    !  half of outer orbit bump magnet (injection) E1 = 1.0*angle_orbump*korbump/2  , E2 = -1.0*angle_orbump*korbump/2  
+          E1 = 0.0  , E2 = 0.0      , 
           K1 = -0.0023173*korbump/L_ORB , K2 = 0.10077*korbump/L_ORB,   K3 = -11.625*korbump/L_ORB;
 MULBUMP_1 : MULTIPOLE, KNL = {0, 0, 0, 0, 1049.5*korbump, -46803000.0*korbump, 1625200.0*korbump};
+ORBUMPa_1_d  : SBEND , L = L1_ORB/2   , ANGLE = -1.0*angle_orbump*korbump    ,    !  half of outer orbit bump magnet (injection) E1 = 1.0*angle_orbump*korbump/2  , E2 = -1.0*angle_orbump*korbump/2  
+          E1 = 0.0  , E2 = 2.0*angle_orbump*korbump      , 
+          K1 = -0.0023173*korbump/L_ORB , K2 = 0.10077*korbump/L_ORB,   K3 = -11.625*korbump/L_ORB;
 
-ORBUMPa_2   : RBEND , L = L_ORB/2   , ANGLE = 0.022*korbump ,   !  half of inner orbit bump magnet (injection)  
-          E1 = -0.022*korbump/2  , E2=-0.022*korbump/2       , 
+ORBUMPa_2   : RBEND , L = L_ORB/2   , ANGLE = angle_orbump_2*korbump ,   !  half of inner orbit bump magnet (injection)  
+          E1 = 1.0*angle_orbump_2*korbum/2  , E2= -1.0*angle_orbump_2*korbump/2    , 
           K1 = 0.0031418*korbump/L_ORB  , K2=0.02218*korbump/L_ORB  , K3 = 3.3586*korbump/L_ORB;
 MULBUMP_2  : MULTIPOLE, KNL = {0, 0, 0, 0, 135.01*korbump, -10305000.0*korbump, -3250500.0*korbump};
 
-ORBUMPa_4  : RBEND , L = L_ORB/2   , ANGLE = -0.011*korbump    ,    !  half of outer orbit bump magnet (injection)
-          E1 = 0.011*korbump/2  , E2 = 0.011*korbump/2     , 
+ORBUMPa_4_u  : SBEND , L = L1_ORB/2   , ANGLE = -1.0*angle_orbump*korbump    ,    !  half of outer orbit bump magnet (injection)
+          E1 = 2.0*angle_orbump*korbump  , E2 =   0.0     , 
           K1 = -0.0023173*korbump/L_ORB , K2 = 0.10077*korbump/L_ORB,   K3 = -11.625*korbump/L_ORB;
 MULBUMP_4 : MULTIPOLE, KNL = {0, 0, 0, 0, 1049.5*korbump, -46803000.0*korbump, 1625200.0*korbump};
+ORBUMPa_4_d  : SBEND , L = L1_ORB/2   , ANGLE = -1.0*angle_orbump*korbump    ,    !  half of outer orbit bump magnet (injection)
+          E1 = 0.0  , E2 =   0.0     , 
+          K1 = -0.0023173*korbump/L_ORB , K2 = 0.10077*korbump/L_ORB,   K3 = -11.625*korbump/L_ORB;
 
-ORBUMP_1    : LINE=(ORBUMPa_1,MULBUMP_1,ORBUMPa_1);
+
+ORBUMP_1    : LINE=(ORBUMPa_1_u,MULBUMP_1,ORBUMPa_1_d);
 ORBUMP_2    : LINE=(ORBUMPa_2,MULBUMP_2,ORBUMPa_2);
-ORBUMP_4    : LINE=(ORBUMPa_4,MULBUMP_4,ORBUMPa_4);
+ORBUMP_4    : LINE=(ORBUMPa_4_u,MULBUMP_4,ORBUMPa_4_d);
 
 !L_ORB_FULL  := 0.4823097;          ! length along reference orbit (used in sequence definition to aviod negative drift space error)
 !ORBUMP_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_1, L = L_ORB_FULL;
@@ -127,31 +158,48 @@ ORBUMP_4    : LINE=(ORBUMPa_4,MULBUMP_4,ORBUMPa_4);
 //-----  Dogleg magnets     ---------------------------------------------------------
 L_DOG	 = 0.24722;
 
-DOG03_1a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344* I_DOGL03 / 180 *kpc/2	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
-            E1 := -0.01172/2* I_DOGL03 / 180 *kpc	, E2 := -0.01172/2* I_DOGL03 / 180 *kpc	,
+angle_dogleg = .02344* (I_DOGL03+0.0000001) / 180 *kpc/2; ! I_DOGL03 != 0
+!angle_dogleg = .02344* (293+0.0000001) / 180 *kpc/2; ! I_DOGL03 != 0
+L1_DOG       = L_DOG*angle_dogleg*2/sin(angle_dogleg*2);!sbend
+
+
+
+DOG03_1a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
+            E1 := 0.0	, E2 := 0.0	,
             K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
 MULDG03_1   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -8.1984* I_DOGL03 / 180 *kpc, -1506.3* I_DOGL03 / 180 *kpc, -354750.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_1
+DOG03_1a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
+            E1 := 0.0	, E2 := 2*angle_dogleg	,
+            K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
 
-DOG03_2a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344* I_DOGL03 / 180 *kpc/2	, TILT := pi/2	,      ! half DBL002  DogLeg magnet 
-          	E1 := 0.01172* I_DOGL03 / 180 *kpc/2	, E2 := 0.01172* I_DOGL03 / 180 *kpc/2	,
+DOG03_2a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg  	, TILT := pi/2	,      ! half DBL002  DogLeg magnet 
+          	E1 := -2*angle_dogleg	, E2 := 0.0	,
             K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
 MULDG03_2   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -30.061* I_DOGL03 / 180 *kpc, 1264.2* I_DOGL03 / 180 *kpc, 1074800.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_2
+DOG03_2a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg  	, TILT := pi/2	,      ! half DBL002  DogLeg magnet 
+          	E1 := 0.0	, E2 := 0.0	,
+            K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
 
-DOG03_3a 	: RBEND	, L := L_DOG/2	, ANGLE := -.02344* I_DOGL03 / 180 *kpc/2	, TILT := pi/2	,      ! half DBL004  DogLeg magnet 
-          	E1 := 0.01172* I_DOGL03 / 180 *kpc/2	, E2 := 0.01172* I_DOGL03 / 180 *kpc/2	,
+DOG03_3a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg 	, TILT := pi/2	,      ! half DBL004  DogLeg magnet 
+          	E1 := 1/2*angle_dogleg 	, E2 := - 1/2*angle_dogleg	,
             K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
 MULDG03_3   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 8.1984* I_DOGL03 / 180 *kpc, -2151.8* I_DOGL03 / 180 *kpc, -561250.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_3
+DOG03_3a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg 	, TILT := pi/2	,      ! half DBL004  DogLeg magnet 
+          	E1 := 0.0 	, E2 := - 2*angle_dogleg	,
+            K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
 
-DOG03_4a 	: RBEND	, L := L_DOG/2	, ANGLE := .02344* I_DOGL03 / 180 *kpc/2	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
-          	E1 := -0.01172* I_DOGL03 / 180 *kpc/2	, E2 := -0.01172/2* I_DOGL03 / 180 *kpc	,
+DOG03_4a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
+          	E1 :=  2*angle_dogleg	, E2 := 0.0	,
             K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG; 
 MULDG03_4   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 4.0992* I_DOGL03 / 180 *kpc, 14794.0* I_DOGL03 / 180 *kpc, -317690.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_4
+DOG03_4a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
+          	E1 :=  0.0	, E2 := 0.0	,
+            K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG;
 
-
-DOG03_1    : line = (DOG03_1a, MULDG03_1,DOG03_1a);
-DOG03_2    : line = (DOG03_2a, MULDG03_2,DOG03_2a);
-DOG03_3    : line = (DOG03_3a, MULDG03_3,DOG03_3a);
-DOG03_4    : line = (DOG03_4a, MULDG03_4,DOG03_4a);
+DOG03_1    : line = (DOG03_1a_u, MULDG03_1,DOG03_1a_d);
+DOG03_2    : line = (DOG03_2a_u, MULDG03_2,DOG03_2a_d);
+DOG03_3    : line = (DOG03_3a_u, MULDG03_3,DOG03_3a_d);
+DOG03_4    : line = (DOG03_4a_u, MULDG03_4,DOG03_4a_d);
 
 
 
@@ -480,18 +528,18 @@ CPS23 :    line=(HS23,VS23,QS23,QSERR23,BPMS23,QSS23,QSSERR23,SXS23,SSS23);
 
 //----------------corrector at long--------------------------
 
- HL01            : DHZ             ,          HKICK := DHZ->CALIB*I_HL01   		;
- VL01            : DVT             ,          VKICK := DVT->CALIB*I_VL01   		;
- QL01            : NQUAD           ,          K1  	:= NQUAD->CALIB*I_QL01  	;
- QLERR01         : ERRQUAD         ,          KNL  	:= {0, K_QLERR01}		;
- BPML01          : BPM_1           ;
- QSL01           : SQUAD           ,          K1S 	:= SQUAD->CALIB*I_SQL01  	;
- QSLERR01        : ERRQUAD         ,          KSL 	:= {0, K_SQLERR01}		;
- SXL01           : NSEXT           ,          K2 	:= NSEXT->CALIB*I_SXL01   	;
- SSL01           : SSEXT           ,          K2S 	:= SSEXT->CALIB*I_SSL01   	;
+ HL01            : DHZ_L1             ,          HKICK := DHZ->CALIB*I_HL01   		;
+ VL01            : DVT_L1             ,          VKICK := DVT->CALIB*I_VL01   		;
+ QL01            : NQUAD_L1          ,           K1  	:= NQUAD->CALIB*I_QL01  	;
+ QLERR01         : ERRQUAD            ,          KNL  	:= {0, K_QLERR01}		;
+ BPML01          : BPM_1_L1           ;
+ QSL01           : SQUAD_L1           ,          K1S 	:= SQUAD->CALIB*I_SQL01  	;
+ QSLERR01        : ERRQUAD            ,          KSL 	:= {0, K_SQLERR01}		;
+ SXL01           : NSEXT_L1           ,          K2 	:= NSEXT->CALIB*I_SXL01   	;
+ SSL01           : SSEXT_L1           ,          K2S 	:= SSEXT->CALIB*I_SSL01   	;
 CPL01 :    line=(HL01,VL01,QL01,QLERR01,BPML01,QSL01,QSLERR01,SXL01,SSL01);
 
-HL02            : DHZ             ,          HKICK := DHZ->CALIB*I_HL02   		;
+ HL02            : DHZ             ,          HKICK := DHZ->CALIB*I_HL02   		;
  VL02            : DVT             ,          VKICK := DVT->CALIB*I_VL02   		;
  QL02            : NQUAD           ,          K1 	:= NQUAD->CALIB*I_QL02  		;
  QLERR02         : ERRQUAD         ,          KNL 	:= {0, K_QLERR02  		};
@@ -502,18 +550,18 @@ HL02            : DHZ             ,          HKICK := DHZ->CALIB*I_HL02   		;
  SSL02           : SSEXT           ,          K2S 	:= SSEXT->CALIB*I_SSL02  		;
 CPL02 :    line=(HL02,VL02,QL02,QLERR02,BPML02,QSL02,QSLERR02,SXL02,SSL02);
 
-HL03            : DHZ             ,        	HKICK := DHZ->CALIB*I_HL03 ;
- VL03            : DVT             ,            VKICK := DVT->CALIB*I_VL03  ;
- QL03            : NQUAD           ,            K1    := NQUAD->CALIB*I_QL03 ;
- QLERR03         : ERRQUAD         ,            KNL  := {0, K_QLERR03}       ;
+ HL03            : DHZ_L3             ,        	 HKICK := DHZ->CALIB*I_HL03 ;
+ VL03            : DVT_L3             ,          VKICK := DVT->CALIB*I_VL03  ;
+ QL03            : NQUAD_L3           ,          K1    := NQUAD->CALIB*I_QL03 ;
+ QLERR03         : ERRQUAD            ,          KNL  := {0, K_QLERR03}       ;
 !BPM renamed according to sketch: although it is in the regular corrector package
 !it get the "U" because upstream 
 ! BPML03          : BPM_1           , AT = 0.15;
- BPMLU3          : BPM_1           ;
- QSL03           : SQUAD           ,            K1S   := SQUAD->CALIB*I_SQL03;
- QSLERR03        : ERRQUAD         ,            KSL  := {0, K_SQLERR03}      ;
- SXL03           : NSEXT           ,            K2    := NSEXT->CALIB*I_SXL03;
- SSL03           : SSEXT           ,            K2S   := SSEXT->CALIB*I_SSL03;
+ BPMLU3          : BPM_1_L3           ;
+ QSL03           : SQUAD_L3           ,          K1S   := SQUAD->CALIB*I_SQL03;
+ QSLERR03        : ERRQUAD            ,          KSL  := {0, K_SQLERR03}      ;
+ SXL03           : NSEXT_L3           ,          K2    := NSEXT->CALIB*I_SXL03;
+ SSL03           : SSEXT_L3           ,          K2S   := SSEXT->CALIB*I_SSL03;
 CPL03 :    line=(HL03,VL03,QL03,QLERR03,BPMLU3,QSL03,QSLERR03,SXL03,SSL03);
 
  HL04            : DHZ             ,             HKICK := DHZ->CALIB*I_HL04  		;
@@ -680,6 +728,18 @@ CPL17 :    line=(HL17,VL17,QL17,QLERR17,BPML17,QSL17,QSLERR17,SXL17,SSL17);
  SXL18           : NSEXT           ,          K2 	:= NSEXT->CALIB*I_SXL18   		;
  SSL18           : SSEXT           ,          K2S 	:= SSEXT->CALIB*I_SSL18   		;
 CPL18 :    line=(HL18,VL18,QL18,QLERR18,BPML18,QSL18,QSLERR18,SXL18,SSL18); 
+
+ HL19            : DHZ             ,          HKICK := DHZ->CALIB*I_HL19   			;
+ VL19            : DVT             ,          VKICK := DVT->CALIB*I_VL19   			;
+ QL19            : NQUAD           ,          K1 	:= NQUAD->CALIB*I_QL19  			;
+ QLERR19         : ERRQUAD         ,          KNL 	:= {0, K_QLERR19  			};
+ BPML19          : BPM_1           ;
+ QSL19           : SQUAD           ,          K1S 	:= SQUAD->CALIB*I_SQL19  			;
+ QSLERR19        : ERRQUAD         ,          KSL 	:= {0, K_SQLERR19  			};
+ SXL19           : NSEXT           ,          K2 	:= NSEXT->CALIB*I_SXL19   		;
+ SSL19           : SSEXT           ,          K2S 	:= SSEXT->CALIB*I_SSL19   		;
+CPL19 :    line=(HL19,VL19,QL19,QLERR19,BPML19,QSL19,QSLERR19,SXL19,SSL19); 
+
 
  HL20            : DHZ             ,          HKICK := DHZ->CALIB*I_HL20   			;
  VL20            : DVT             ,          VKICK := DVT->CALIB*I_VL20   			;
