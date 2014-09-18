@@ -9,13 +9,13 @@ ssf     :=     -0.0023;                         !  0.0280 - 0.0310*kpc     !  bo
 ssd     :=     -0.0426;                         ! -0.0680 + 0.0226*kpc     !  body sextupole component of defocusing magnet  (new 03/07/03) at inject
 rhof    :=      40.847086;                      !  bending radius of focusing magnet
 rhod   	:=      48.034101;                      !  bending radius of defocusing magnet
-blength	:=     2.889612;! 2.889;                       !  bending length (along the equilibrium trajectory)
-!blengthf	:=    2.889009499; !2.889612;! 2.889;                       !  bending length (along the equilibrium trajectory)
-!blengthd	:=    2.889176299; !2.889612;! 2.889;                       !  bending length (along the equilibrium trajectory)
-!FMAG        : RBEND,  L = blengthf	, ANGLE = blength/rhof, K1 = qsf  , K2 = ssf; 
-!DMAG        : RBEND,  L = blengthd	, ANGLE = blength/rhod, K1 = qsd  , K2 = ssd; 
-FMAG        : RBEND,  L = blength	, ANGLE = blength/rhof, K1 = qsf  , K2 = ssf; 
-DMAG        : RBEND,  L = blength	, ANGLE = blength/rhod, K1 = qsd  , K2 = ssd; 
+blength	:=     2.889612;! 2.889;                       !  arc length for both F and D magnets
+blengthf	:=    2.889009499; !2.889612;! 2.889;                       !  physical length (straight length) for F magnet
+blengthd	:=    2.889176299; !2.889612;! 2.889;                       !  physical length (straight length) for D magnet
+FMAG        : RBEND,  L = blengthf	, ANGLE = blength/rhof, K1 = qsf  , K2 = ssf; 
+DMAG        : RBEND,  L = blengthd	, ANGLE = blength/rhod, K1 = qsd  , K2 = ssd; 
+!FMAG        : RBEND,  L = blength	, ANGLE = blength/rhof, K1 = qsf  , K2 = ssf; 
+!DMAG        : RBEND,  L = blength	, ANGLE = blength/rhod, K1 = qsd  , K2 = ssd; 
 
 //---------------------- Other RBEND magnets ------------------------------------------------------------
 MKS02       : RBEND		, L = 1.080	   , ANGLE = 0 , TILT = pi/2; 
@@ -23,7 +23,7 @@ MKS12       : RBEND		, L = 1.08     , ANGLE = 0 , TILT = pi/2;          ! vertic
 BEX         : RBEND		, L = 0.265    , TILT  = pi/2;                     ! BEX bump
 BEX2         : RBEND		, L = 0.265/2.    , TILT  = pi/2; 
 BEX3         : RBEND		, L = 0.33    , TILT  = pi/2; 
-SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2, E1=-0,00000001/2., E2=-0,00000001/2.;
+SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2, E1=-0.00000001/2., E2=-0.00000001/2.;
 
 //---------------------- Corrector Package Elements ---------------------------------------------
 DHZ    	    : HKICKER			, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
