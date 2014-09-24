@@ -13,6 +13,7 @@
  !The length between ORBUMP1 and 2 and ORBUMP2 and 4 were different in booster.ele.  The locations were fixed and the orbit was closed at injection and extraction energy.
  !ORBUMPs and DOGLEGs were changed from RBEND magnets to SBEND.  09/08/14 -K.Seiya 
  !The magnet lengths were changed for both F and D magnets.  'RBARC' setting  has to be 'RBARC=TRUE' which is default.    The megnets were defined as 'RBEND' and the length means 'straight length', NOT 'arc length'. "blength" is used as an 'arc length' in order to calculate the bending angle. -09/17/14 K. Seiya
+! Changed ORBUMP length from 0.4823 to 0.5585. -09/24/14 K. Seiya
 
  option, -echo, warn, info;
  set,  format="20.10f";

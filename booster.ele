@@ -105,7 +105,7 @@ SEPTU03     : RBEND	, L = 1.524/2, ANGLE = 0.00000001, TILT = pi/2	;    !  septu
 angle_orbump = 0.0011; ! angle_orbump != 0
 angle_orbump_2 = 0.0022; ! angle_orbump != 0
 
-L_ORB       = 0.4823;!rbend;
+L_ORB       = 0.5585;!rbend;
 L1_ORB       = L_ORB*angle_orbump*2/sin(angle_orbump*2);!sbend
 
 IF (t0 < 2.05) {korbump = 1;}
