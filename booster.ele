@@ -26,8 +26,8 @@ BEX3         : RBEND		, L = 0.33    , TILT  = pi/2;
 SEPT03      : RBEND		, L = 1.524/2  , ANGLE = 0.00000001 , TILT = pi/2, E1=-0.00000001/2., E2=-0.00000001/2.;
 
 //---------------------- Corrector Package Elements ---------------------------------------------
-DHZ    	    : HKICKER			, L = 0.024 , CALIB = 0.000366 / 0.024 / Brho;         
-DVT         : VKICKER			, L = 0.024 , CALIB = 0.000365 / 0.024 / Brho;      
+DHZ    	    : HKICKER			, L = 0.024 , CALIB = 0.000366 / Brho;         
+DVT         : VKICKER			, L = 0.024 , CALIB = 0.000365 / Brho;      
 NQUAD       : QUADRUPOLE		, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
 ERRQUAD     : MULTIPOLE   ;        
 SQUAD  	    : QUADRUPOLE 		, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;        
@@ -36,8 +36,8 @@ SSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;
 BPM_1	    : MONITOR			, L = 0.024 ;  
 
 //---------------------- Corrector Package Elements ---------------------------------------------
-DHZ_L1    	: HKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000366 / 0.024 / Brho;         
-DVT_L1       	: VKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000365 / 0.024 / Brho;      
+DHZ_L1    	: HKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000366 / Brho;         
+DVT_L1       	: VKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000365 / Brho;      
 NQUAD_L1        : QUADRUPOLE		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.002489 / 0.024 / Brho;        
 SQUAD_L1  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_orbump) , CALIB = -0.003924 / 0.024 / Brho;        
 NSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 0.045831 / 0.024 / Brho;      
@@ -45,8 +45,8 @@ SSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 0.045
 BPM_1_L1        : MONITOR		, L = 0.024/cos(2*angle_orbump) ;  
 
 //---------------------- Corrector Package Elements ---------------------------------------------
-DHZ_L3    	: HKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000366 / 0.024 / Brho;         
-DVT_L3       	: VKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000365 / 0.024 / Brho;      
+DHZ_L3    	: HKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000366 /  Brho;         
+DVT_L3       	: VKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000365 /  Brho;      
 NQUAD_L3        : QUADRUPOLE		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.002489 / 0.024 / Brho;             
 SQUAD_L3  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_dogleg) , CALIB = -0.003924 / 0.024 / Brho;        
 NSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.045831 / 0.024 / Brho;      
