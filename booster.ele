@@ -31,8 +31,8 @@ DVT         : VKICKER			, L = 0.024 , CALIB = 0.000365 / Brho;
 NQUAD       : QUADRUPOLE		, L = 0.024 , CALIB = 0.002489 / 0.024 / Brho;        
 ERRQUAD     : MULTIPOLE   ;        
 SQUAD  	    : QUADRUPOLE 		, L = 0.024 , CALIB = -0.003924 / 0.024 / Brho;        
-NSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 0.045831 / 0.024 / Brho;      
-SSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 0.045477 / 0.024 / Brho;     
+NSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 2.0 * 0.045831 / 0.024 / Brho;      
+SSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 2.0 * 0.045477 / 0.024 / Brho;     
 BPM_1	    : MONITOR			, L = 0.024 ;  
 
 //---------------------- Corrector Package Elements ---------------------------------------------
@@ -40,8 +40,8 @@ DHZ_L1    	: HKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000366 / Brho;
 DVT_L1       	: VKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000365 / Brho;      
 NQUAD_L1        : QUADRUPOLE		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.002489 / 0.024 / Brho;        
 SQUAD_L1  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_orbump) , CALIB = -0.003924 / 0.024 / Brho;        
-NSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 0.045831 / 0.024 / Brho;      
-SSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 0.045477 / 0.024 / Brho;     
+NSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 2.0 * 0.045831 / 0.024 / Brho;      
+SSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 2.0 * 0.045477 / 0.024 / Brho;     
 BPM_1_L1        : MONITOR		, L = 0.024/cos(2*angle_orbump) ;  
 
 //---------------------- Corrector Package Elements ---------------------------------------------
@@ -49,8 +49,8 @@ DHZ_L3    	: HKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000366 /  Brho
 DVT_L3       	: VKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000365 /  Brho;      
 NQUAD_L3        : QUADRUPOLE		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.002489 / 0.024 / Brho;             
 SQUAD_L3  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_dogleg) , CALIB = -0.003924 / 0.024 / Brho;        
-NSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.045831 / 0.024 / Brho;      
-SSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.045477 / 0.024 / Brho;     
+NSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 2.0 * 0.045831 / 0.024 / Brho;      
+SSEXT_L3        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_dogleg) , CALIB = 2.0 * 0.045477 / 0.024 / Brho;     
 BPM_1_L3        : MONITOR		, L = 0.024/cos(2*angle_dogleg) ;  
 
 //---------------------- O length monitor to be set in the middle of IBEX------------
