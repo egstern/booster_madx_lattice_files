@@ -5,8 +5,15 @@
 //---------------------- Main bending magnets magnets         ---------------------------------------------
 qsd     :=     -0.0577069;                      !  body quadrupole component of defocusing magnet
 qsf     :=      0.0542195;                      !  body quadrupole component of focusing magnet
-ssf     :=     -0.0023;                         !  0.0280 - 0.0310*kpc     !  body sextupole component of focusing magnet    (new 03/07/03) at inject
-ssd     :=     -0.0426;                         ! -0.0680 + 0.0226*kpc     !  body sextupole component of defocusing magnet  (new 03/07/03) at inject
+
+!ssf     :=     -0.0023;                         !  0.0280 - 0.0310*kpc     !  body sextupole component of focusing magnet    (new 03/07/03) at inject
+!ssd     :=     -0.0426;                         ! -0.0680 + 0.0226*kpc     !  body sextupole component of defocusing magnet  (new 03/07/03) at inject
+
+! both ssf and ssd strengths come from polynomial fits of measured data:
+! "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
+ssf     :=     -0.0083341 + ke1*(0.022124 + ke1*(-0.0068108 + ke1*(0.00090913 - ke1* 0.000044265)));
+ssd     :=     -0.046185 + ke1*(0.0079794 + ke1*(-0.002355  + ke1*(0.00031028 -  ke1*0.000015649)));
+
 rhof    :=      40.847086;                      !  bending radius of focusing magnet
 rhod   	:=      48.034101;                      !  bending radius of defocusing magnet
 blength	:=     2.889612;! 2.889;                       !  arc length for both F and D magnets

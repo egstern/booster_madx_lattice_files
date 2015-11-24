@@ -16,6 +16,7 @@
 ! Changed ORBUMP length from 0.4823 to 0.5585. -09/24/14 K. Seiya
 !Since DHZ and DVT were defined as kickers, not dipole, 'CALIB = 0.000366 /  0.024 / Brho' was changed to   'CALIB = 0.000366 / Brho';  -06/25/15 K. Seiya
 !CALIB for sextupole and skew sextupole was changed by factor 2. The number N[T/m/A] from measurement is equal to 1/2 * B2 * L when By = B0 + B1 * x + 1/2 B2 * x^2 + ... , therefore K2 = 1 / Brho * B2 = 1 / Brho * 2 * N / L.   - 06/26/15 K. Seiya
+! New calibration of sextupole strengths that are dependent on ke are from "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
 
  option, -echo, warn, info;
  set,  format="20.10f";
@@ -90,8 +91,13 @@ pcExt = sqrt(( KEext+ pmass)*( KEext+ pmass)- pmass*pmass); 	 ! extraction momen
 pc = (pcExt + pcInj)/2 - (pcExt - pcInj)/2 * cos(2*PI*15*(t0-2)/1000);		! momentum at chosen time point
 kpc=pcInj/pc;
 Brho= pc/ clight *1e9;  
-Brho0= pcInj/ clight *1e9;  
- 
+Brho0= pcInj/ clight *1e9;
+
+etot=sqrt(pc*pc+pmass*pmass);				! total energy
+ke1 = etot - pmass;					! kinetic energy at that breakpoint
+
+value, pmass, pc, etot, ke1;
+
 call, file = 'booster.ele';
 call, file = 'booster.seq';
 
