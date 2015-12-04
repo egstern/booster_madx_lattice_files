@@ -1,3 +1,6 @@
+! This file is NO longer maintained!
+! use "git log" to see all changes.
+
 !     Sign of bending in the horizontal magnets is taken reverse to get a positive dispersion in a Booster 
 !     lattice and in the 0.4 GeV beam line from Linac to Booster. For geometry calculations we need to change 
 !     sign of bending in both lattices. 
@@ -151,4 +154,6 @@
 !	Layout of Long 3 dogleg has been altered to match drawings by J. Lackey, but U3L bpm position is not exactly known (needs to be checked with survey data)
 !	Operational values of corrector package elements, dogleg current, and harmonic sx current are read in via tables; user can select a slot for the time 
 !		in the acceleration cycle to use (corresponding to a row in the QL.dat table) for reading magnet currents. The normal and skew pseudo quad errors from
-!		LOCO can also be included; the variable "errorSwitch" turns this off and on.
+!		LOCO can also be included; the variable "errorSwitch"
+turns this off and on.
+

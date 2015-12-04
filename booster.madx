@@ -17,6 +17,7 @@
 !Since DHZ and DVT were defined as kickers, not dipole, 'CALIB = 0.000366 /  0.024 / Brho' was changed to   'CALIB = 0.000366 / Brho';  -06/25/15 K. Seiya
 !CALIB for sextupole and skew sextupole was changed by factor 2. The number N[T/m/A] from measurement is equal to 1/2 * B2 * L when By = B0 + B1 * x + 1/2 B2 * x^2 + ... , therefore K2 = 1 / Brho * B2 = 1 / Brho * 2 * N / L.   - 06/26/15 K. Seiya
 ! New calibration of sextupole strengths that are dependent on ke are from "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
+! Gradient magnet quad strengths now vary with ke.
 
  option, -echo, warn, info;
  set,  format="20.10f";
@@ -66,6 +67,18 @@ READMYTABLE,file="SSL.dat",table=SSLtable;
 setvars, table=SSLtable,row= timeSlot;
 READMYTABLE,file="SSS.dat",table=SSStable;
 setvars, table=SSStable,row= timeSlot;
+!
+! The gradient magnets do not have constant quad strengths
+! but vary with ke.
+!
+! The qsdqsf.dat file was created by fitting qsd and qsf to the measured tune data.
+! This fit was found using 13 Nov 2015 measured data.
+! Above transition only a rough fit is done at this time.
+!
+READMYTABLE,file="qsdqsf.dat",table=qsqdtable;
+setvars, table=qsqdtable,row= timeSlot;
+
+
 t0=time;
 value, t0;
 

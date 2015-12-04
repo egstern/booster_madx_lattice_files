@@ -3,11 +3,11 @@
 /************************************************************************************/
 
 //---------------------- Main bending magnets magnets         ---------------------------------------------
-qsd     :=     -0.0577069;                      !  body quadrupole component of defocusing magnet
-qsf     :=      0.0542195;                      !  body quadrupole component of focusing magnet
 
-!ssf     :=     -0.0023;                         !  0.0280 - 0.0310*kpc     !  body sextupole component of focusing magnet    (new 03/07/03) at inject
-!ssd     :=     -0.0426;                         ! -0.0680 + 0.0226*kpc     !  body sextupole component of defocusing magnet  (new 03/07/03) at inject
+! The old constant quad strengths that were used prior to fix so that these strengths changed with ke 
+!qsd     :=     -0.0577069;                      !  body quadrupole component of defocusing magnet
+!qsf     :=      0.0542195;                      !  body quadrupole component of focusing magnet
+
 
 ! both ssf and ssd strengths come from polynomial fits of measured data:
 ! "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
