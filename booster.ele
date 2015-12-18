@@ -343,7 +343,7 @@ CPS05 :    line=(HS05,VS05,QS05,QSERR05,BPMS05,QSS05,QSSERR05,SXS05,SSS05);
 
 HS06            : DHZ             ,              HKICK := DHZ->CALIB*I_HS06   			;
  VS06            : DVT             ,              VKICK := DVT->CALIB*I_VS06   			;
- QS06            : NQUAD           ,              K1 	:= NQUAD->CALIB*I_QL06  			;
+ QS06            : NQUAD           ,              K1 	:= NQUAD->CALIB*I_QS06  			;
  QSERR06         : ERRQUAD         ,              KNL 	:= {0, K_QLERR06  			};
  BPMS06          : BPM_1           ;
  QSS06           : SQUAD           ,              K1S 	:= SQUAD->CALIB*I_SQS06  			;
