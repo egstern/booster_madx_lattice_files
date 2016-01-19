@@ -122,7 +122,7 @@ L_ORB       = 0.5585;!rbend;
 L1_ORB       = L_ORB*angle_orbump*2/sin(angle_orbump*2);!sbend
 
 IF (t0 < 2.05) {korbump = 1;}
-ELSE {korump = 0;}              ! orbump is only on for ~ 50 microsecs after injection
+ELSE {korbump = 0;}              ! orbump is only on for ~ 50 microsecs after injection
 value, korbump;
 
 ORBUMPa_1_u  : SBEND , L = L1_ORB/2   , ANGLE = -1.0*angle_orbump*korbump    ,    !  half of outer orbit bump magnet (injection) E1 = 1.0*angle_orbump*korbump/2  , E2 = -1.0*angle_orbump*korbump/2  
