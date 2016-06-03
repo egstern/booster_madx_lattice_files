@@ -172,47 +172,57 @@ ORBUMP_4    : LINE=(ORBUMPa_4_u,MULBUMP_4,ORBUMPa_4_d);
 L_DOG	 = 0.24722;
 
 angle_dogleg = .02344* (I_DOGL03+0.0000001) / 180 *kpc/2; ! I_DOGL03 != 0
-!angle_dogleg = .02344* (293+0.0000001) / 180 *kpc/2; ! I_DOGL03 != 0
+!angle_dogleg = .02344* (0.0+0.0000001) / 180 *kpc/2; ! I_DOGL03 != 0
 L1_DOG       = L_DOG*angle_dogleg*2/sin(angle_dogleg*2);!sbend
+!L1_DOG       = L_DOG*angle_dogleg/sin(angle_dogleg)*cos(angle_dogleg);!sbend
 
 
 
 DOG03_1a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
-            E1 := 0.0	, E2 := 0.0	,
-            K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
-MULDG03_1   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -8.1984* I_DOGL03 / 180 *kpc, -1506.3* I_DOGL03 / 180 *kpc, -354750.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_1
+            	E1 := 0.0*angle_dogleg , E2 := 1.0*angle_dogleg	,
+            	K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
+
 DOG03_1a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL001  DogLeg magnet 
-            E1 := 0.0	, E2 := 2*angle_dogleg	,
-            K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
+            	E1 := -1.0*angle_dogleg	, E2 :=  2.0*angle_dogleg	,
+            	K1 := -0.00007091/L_DOG* I_DOGL03 / 180 *kpc, K2 := 0.045547/L_DOG* I_DOGL03 / 180 *kpc	, K3 := 0.19956/L_DOG* I_DOGL03 / 180 *kpc;
 
-DOG03_2a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg  	, TILT := pi/2	,      ! half DBL002  DogLeg magnet 
-          	E1 := -2*angle_dogleg	, E2 := 0.0	,
-            K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
-MULDG03_2   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -30.061* I_DOGL03 / 180 *kpc, 1264.2* I_DOGL03 / 180 *kpc, 1074800.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_2
-DOG03_2a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg  	, TILT := pi/2	,      ! half DBL002  DogLeg magnet 
-          	E1 := 0.0	, E2 := 0.0	,
-            K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
 
-DOG03_3a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg 	, TILT := pi/2	,      ! half DBL004  DogLeg magnet 
-          	E1 := 1/2*angle_dogleg 	, E2 := - 1/2*angle_dogleg	,
-            K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
-MULDG03_3   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 8.1984* I_DOGL03 / 180 *kpc, -2151.8* I_DOGL03 / 180 *kpc, -561250.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_3
-DOG03_3a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := -1.0*angle_dogleg 	, TILT := pi/2	,      ! half DBL004  DogLeg magnet 
-          	E1 := 0.0 	, E2 := - 2*angle_dogleg	,
-            K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
+
+DOG03_2a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := 1.0*angle_dogleg  	, TILT := -1.0 * pi/2	,      ! half DBL002  DogLeg magnet 
+          	E1 := 2.0*angle_dogleg	, E2 := -1.0*angle_dogle	,
+            	K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
+DOG03_2a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := 1.0*angle_dogleg  	, TILT := -1.0*pi/2	,      ! half DBL002  DogLeg magnet 
+          	E1 := 1.0*angle_dogle	, E2 :=  0.0*angle_dogle	,
+            	K1 := -0.000078369* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.047016* I_DOGL03 / 180 *kpc/.24722, K3 := 0.13622/L_DOG* I_DOGL03 / 180 *kpc  ;
+
+
+
+DOG03_3a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := 1.0*angle_dogleg 	, TILT :=-1.0 * pi/2	,      ! half DBL004  DogLeg magnet 
+          	E1 := 0.0*angle_dogleg 	, E2 := 1.0*angle_dogleg	,
+            	K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
+DOG03_3a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := 1.0*angle_dogleg 	, TILT := -1.0*pi/2	,      ! half DBL004  DogLeg magnet 
+          	E1 := -1.0*angle_dogleg 	, E2 := 2.0*angle_dogleg	,
+            	K1 := 0.000057844* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.04848* I_DOGL03 / 180 *kpc/.24722, K3 := 0.05206* I_DOGL03 / 180 *kpc/L_DOG	;
+
+
 
 DOG03_4a_u 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
-          	E1 :=  2*angle_dogleg	, E2 := 0.0	,
-            K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG; 
-MULDG03_4   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 4.0992* I_DOGL03 / 180 *kpc, 14794.0* I_DOGL03 / 180 *kpc, -317690.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_4
+          	E1 :=  2.0*angle_dogleg	, E2 := 1.0*angle_dogleg	,
+            	K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG; 
 DOG03_4a_d 	: SBEND	, L := L1_DOG/2	, ANGLE := angle_dogleg	    , TILT := pi/2	,      ! half DBL005  DogLeg magnet 
-          	E1 :=  0.0	, E2 := 0.0	,
-            K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG;
+          	E1 :=  -1.0*angle_dogleg	, E2 :=  0.0*angle_dogleg	,
+            	K1 := -0.00000093* I_DOGL03 / 180 *kpc/L_DOG, K2 := 0.042608* I_DOGL03 / 180 *kpc/L_DOG, K3 := -0.0538* I_DOGL03 / 180 *kpc/L_DOG;
 
-DOG03_1    : line = (DOG03_1a_u, MULDG03_1,DOG03_1a_d);
-DOG03_2    : line = (DOG03_2a_u, MULDG03_2,DOG03_2a_d);
-DOG03_3    : line = (DOG03_3a_u, MULDG03_3,DOG03_3a_d);
-DOG03_4    : line = (DOG03_4a_u, MULDG03_4,DOG03_4a_d);
+MULDG03_1   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -8.1984* I_DOGL03 / 180 *kpc, -1506.3* I_DOGL03 / 180 *kpc, -354750.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_1
+MULDG03_2   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, -30.061* I_DOGL03 / 180 *kpc, 1264.2* I_DOGL03 / 180 *kpc, 1074800.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_2
+MULDG03_3   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 8.1984* I_DOGL03 / 180 *kpc, -2151.8* I_DOGL03 / 180 *kpc, -561250.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_3
+MULDG03_4   : MULTIPOLE	, LRAD := L_DOG, TILT := -pi/2	, KNL := {0, 0, 0, 0, 4.0992* I_DOGL03 / 180 *kpc, 14794.0* I_DOGL03 / 180 *kpc, -317690.0* I_DOGL03 / 180 *kpc};	! multipole of DOG03_4
+
+
+DOG03_1    : line = (DOG03_1a_u, MULDG03_1, DOG03_1a_d);
+DOG03_2    : line = (DOG03_2a_u, MULDG03_2, DOG03_2a_d);
+DOG03_3    : line = (DOG03_3a_u, MULDG03_3, DOG03_3a_d);
+DOG03_4    : line = (DOG03_4a_u, MULDG03_4, DOG03_4a_d);
 
 
 

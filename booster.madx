@@ -18,6 +18,7 @@
 !CALIB for sextupole and skew sextupole was changed by factor 2. The number N[T/m/A] from measurement is equal to 1/2 * B2 * L when By = B0 + B1 * x + 1/2 B2 * x^2 + ... , therefore K2 = 1 / Brho * B2 = 1 / Brho * 2 * N / L.   - 06/26/15 K. Seiya
 ! New calibration of sextupole strengths that are dependent on ke are from "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
 ! Gradient magnet quad strengths now vary with ke.
+!E1 and E2 are changed on doglegs
 
  option, -echo, warn, info;
  set,  format="20.10f";
