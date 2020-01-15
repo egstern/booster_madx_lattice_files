@@ -32,8 +32,8 @@
 
    IMPORTANT!!!!! For LOCO fitting, timeSlot must be set to 1 because there there will only be 1 data line in QL*.dat, QS*.dat etc.
 ***************************/
-errorSwitch=1;
-isLOCO=1;
+errorSwitch=0;
+isLOCO=0;
 
 if(isLOCO==1){
   timeSlot=1;

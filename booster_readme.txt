@@ -156,5 +156,13 @@
 !		in the acceleration cycle to use (corresponding to a row in the QL.dat table) for reading magnet currents. The normal and skew pseudo quad errors from
 !		LOCO can also be included; the variable "errorSwitch" turns this off and on.
 !
-! Jeff Eldred test again
+!-----------------------------------------------------------------------------------------------------------------
+!01/14/2020 Jeff Eldred
 !
+!Added RF20 to BCEL18, RF21 & RF22 to BCEL20 in .seq file. BRF represents Booster RF, but left as drift element.
+!
+!Set I_SEXL4, I_SEXL5, I_SEXL6, I_SEXL7 in the DC.dat file to zero - components obsolete.
+!
+!Updated corrector .dat files to reflect 06/19/19 values.
+!
+!Added some bcell description to .seq file - injection, extraction, bex, RF, collimators, notcher.
