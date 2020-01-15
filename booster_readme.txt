@@ -154,6 +154,7 @@
 !	Layout of Long 3 dogleg has been altered to match drawings by J. Lackey, but U3L bpm position is not exactly known (needs to be checked with survey data)
 !	Operational values of corrector package elements, dogleg current, and harmonic sx current are read in via tables; user can select a slot for the time 
 !		in the acceleration cycle to use (corresponding to a row in the QL.dat table) for reading magnet currents. The normal and skew pseudo quad errors from
-!		LOCO can also be included; the variable "errorSwitch"
-turns this off and on.
-
+!		LOCO can also be included; the variable "errorSwitch" turns this off and on.
+!
+! Jeff Eldred test
+!
