@@ -156,5 +156,5 @@
 !		in the acceleration cycle to use (corresponding to a row in the QL.dat table) for reading magnet currents. The normal and skew pseudo quad errors from
 !		LOCO can also be included; the variable "errorSwitch" turns this off and on.
 !
-! Jeff Eldred test
+! Jeff Eldred test again
 !
