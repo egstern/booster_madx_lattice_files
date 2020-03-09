@@ -166,3 +166,7 @@
 !Updated corrector .dat files to reflect 06/19/19 values.
 !
 !Added some bcell description to .seq file - injection, extraction, bex, RF, collimators, notcher.
+!
+!03/09/2020 Jeff Eldred
+!
+!Fixed BCEL20 length discrepancy introduced in 01/14 update, removed OLDPOS/RPOS_MON_OLD. 
