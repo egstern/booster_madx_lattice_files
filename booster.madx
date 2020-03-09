@@ -176,16 +176,16 @@ else {
 	STYLE=1,
 	COLOUR=100,
         TITLE="Booster";
-  !plot, vaxis=betx,bety,dispx haxis=s;
+  plot, vaxis=betx,bety,dispx haxis=s;
 
 }
 
-!plot, file="results/twiss",HAXIS=s,STYLE=100,SPLINE,
-!      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=-20,0,
-!      VMAX=40,15,
-!      TITLE="Booster";
+plot, file="results/twiss",HAXIS=s,STYLE=100,SPLINE,
+      VAXIS1=betx,bety,VAXIS2=dispx,VMIN=-20,0,
+      VMAX=40,15,
+      TITLE="Booster";
 
-!plot, vaxis=betx,bety,dispx haxis=s;
+plot, vaxis=betx,bety,dispx haxis=s;
 
 !ptc_create_universe;
 !ptc_create_layout,model=2,method=6,nst=10,exact;
