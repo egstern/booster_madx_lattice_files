@@ -4,21 +4,10 @@
 
 //---------------------- Main bending magnets magnets         ---------------------------------------------
 
-! The old constant quad strengths that were used prior to fix so that these strengths changed with ke 
-!qsd     :=     -0.0577069;                      !  body quadrupole component of defocusing magnet
-!qsf     :=      0.0542195;                      !  body quadrupole component of focusing magnet
-
-
-! both ssf and ssd strengths come from polynomial fits of measured data:
-! "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
-!ssf     :=     -0.0083341 + ke1*(0.022124 + ke1*(-0.0068108 + ke1*(0.00090913 - ke1* 0.000044265)));
-!ssd     :=     -0.046185 + ke1*(0.0079794 + ke1*(-0.002355  + ke1*(0.00031028 -  ke1*0.000015649)));
-
 ! These ssd and ssf strengths come from fitting to 01 Dec 2015 chromaticity data
 ! and predicts chromaticity much better than using the Drozhdin et al measurements above
 ssd     :=      -0.04381647074 + ke1*(0.009150934932+ ke1*(-0.0023900895  + ke1*(0.000318068028 -  ke1* 1.6353205e-05)));
 ssf     :=      -0.006384940088 + ke1*(0.01967542848 + ke1*( -0.006776746 + ke1*(0.00091367565 - ke1* 4.293705e-05)));
-
 
 rhof    :=      40.847086;                      !  bending radius of focusing magnet
 rhod   	:=      48.034101;                      !  bending radius of defocusing magnet
@@ -152,22 +141,6 @@ ORBUMP_1    : LINE=(ORBUMPa_1_u,MULBUMP_1,ORBUMPa_1_d);
 ORBUMP_2    : LINE=(ORBUMPa_2,MULBUMP_2,ORBUMPa_2);
 ORBUMP_4    : LINE=(ORBUMPa_4_u,MULBUMP_4,ORBUMPa_4_d);
 
-!L_ORB_FULL  := 0.4823097;          ! length along reference orbit (used in sequence definition to aviod negative drift space error)
-!ORBUMP_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_1, L = L_ORB_FULL;
-! ORBUMPa_1                      , AT = L_ORB_FULL/4;
-! MULBUMP_1                     , AT = L_ORB_FULL/2;
-! ORBUMPa_1                      , AT = 3*L_ORB_FULL/4;
-!ENDSEQUENCE;
-!ORBUMP_2    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_2, L = L_ORB_FULL;
-! ORBUMPa_2                     ,AT = L_ORB_FULL/4;
-! MULBUMP_2                    , AT = L_ORB_FULL/2;
-! ORBUMPa_2                     , AT = 3*L_ORB_FULL/4;
-!ENDSEQUENCE;
-!ORBUMP_4    : SEQUENCE, REFER = CENTRE, REFPOS = MULBUMP_4, L = L_ORB_FULL;
-! ORBUMPa_4                     ,AT = L_ORB_FULL/4;
-! MULBUMP_4                    , AT = L_ORB_FULL/2;
-! ORBUMPa_4                     , AT = 3*L_ORB_FULL/4;
-!ENDSEQUENCE;
 
 //-----  Dogleg magnets     ---------------------------------------------------------
 L_DOG	 = 0.24722;
@@ -224,63 +197,6 @@ DOG03_1    : line = (DOG03_1a_u, MULDG03_1, DOG03_1a_d);
 DOG03_2    : line = (DOG03_2a_u, MULDG03_2, DOG03_2a_d);
 DOG03_3    : line = (DOG03_3a_u, MULDG03_3, DOG03_3a_d);
 DOG03_4    : line = (DOG03_4a_u, MULDG03_4, DOG03_4a_d);
-
-
-
-!L_DOG_FULL  :=  0.247221414912;         ! length along reference orbit (used in sequence definition to avoid negative drift space error)
-
-!DOG03_1    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_1, L = L_DOG_FULL;
-! DOG03_1a                     , AT = L_DOG_FULL/4;
-! MULDG03_1                    , AT = L_DOG_FULL/2;
-! DOG03_1a                     , AT = 3*L_DOG_FULL/4;
-!ENDSEQUENCE;  
-
-!DOG03_2    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_2, L = L_DOG_FULL;
-! DOG03_2a                     , AT = L_DOG_FULL/4;
-! MULDG03_2                    , AT = L_DOG_FULL/2;
-! DOG03_2a                     , AT = 3*L_DOG_FULL/4;
-!ENDSEQUENCE;
-
-!DOG03_3    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_3, L = L_DOG_FULL;
-! DOG03_3a                     , AT = L_DOG_FULL/4;
-! MULDG03_3                    , AT = L_DOG_FULL/2;
-! DOG03_3a                     , AT = 3*L_DOG_FULL/4;
-!ENDSEQUENCE;
-
-!DOG03_4    : SEQUENCE, REFER = CENTRE, REFPOS = MULDG03_4, L = L_DOG_FULL;
-! DOG03_4a                     , AT = L_DOG_FULL/4;
-! MULDG03_4                    , AT = L_DOG_FULL/2;
-! DOG03_4a                     , AT = 3*L_DOG_FULL/4;
-!ENDSEQUENCE;
-
-
-!CPL03       : SEQUENCE, REFER=CENTRE, REFPOS = CPL03_START, L = 0.3;
-! CPL03_START     : MARKER          , AT = 0;
-! HL03            : DHZ             , AT = 0.078,           HKICK := DHZ->CALIB*I_HL03 ;
-! VL03            : DVT             , AT = 0.102,           VKICK := DVT->CALIB*I_VL03  ;
-! QL03            : NQUAD           , AT = 0.126,           K1    := NQUAD->CALIB*I_QL03 ;
-! QLERR03         : ERRQUAD         , AT = 0.138,           KNL  := {0, K_QLERR03}       ;
-!!BPM renamed according to sketch: although it is in the regular corrector package
-!!it get the "U" because upstream 
-!! BPML03          : BPM_1           , AT = 0.15;
-! BPMLU3          : BPM_1           , AT = 0.15;
-! QSL03           : SQUAD           , AT = 0.174,           K1S   := SQUAD->CALIB*I_SQL03;
-! QSLERR03        : ERRQUAD         , AT = 0.186,           KSL  := {0, K_SQLERR03}      ;
-! SXL03           : NSEXT           , AT = 0.198,           K2    := NSEXT->CALIB*I_SXL03;
-! SSL03           : SSEXT           , AT = 0.222,           K2S   := SSEXT->CALIB*I_SSL03;
-!ENDSEQUENCE;
-
-!!Dogleg magnets adjusted according to Kyiomi mail
-!DOGLEG    : SEQUENCE, REFER = CENTRE, REFPOS = START_DOG, L = 4 * L_DOG_FULL + 2*.769 + 2*.474 + 1.524+(0.76878-0.7410432758);
-! START_DOG:     MARKER       , AT = 0;
-! DOG03_1                     , AT = L_DOG_FULL/2;!s1
-! CPL03                       , AT = L_DOG_FULL + 0.234389484;
-! DOG03_2                     , AT = L_DOG_FULL + 0.769 + L_DOG_FULL/2 -0.000222086906;
-! SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524/4 -0.0435526371;
-! SEPT03                      , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 3*1.524/4 -0.0435528755;
-! DOG03_3                     , AT = 2 * L_DOG_FULL + 0.769 + 0.474 + 1.524 + 0.474 + L_DOG_FULL/2 + 0.0279567242;
-! DOG03_4                     , AT = 4 * L_DOG_FULL + 2*.769 + 2*.474 + 1.524-L_DOG_FULL/2+(0.76878-0.7410432758);
-!ENDSEQUENCE;
 
 
 //----------------corrector at short--------------------------
