@@ -22,7 +22,7 @@
 
  option, -echo, warn, info;
  set,  format="20.10f";
- !option, RBARC=false;
+ option, RBARC=true;
 
  
 /**********

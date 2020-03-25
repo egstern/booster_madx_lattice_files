@@ -158,15 +158,14 @@
 !
 !-----------------------------------------------------------------------------------------------------------------
 !01/14/2020 Jeff Eldred
-!
-!Added RF20 to BCEL18, RF21 & RF22 to BCEL20 in .seq file. BRF represents Booster RF, but left as drift element.
-!
-!Set I_SEXL4, I_SEXL5, I_SEXL6, I_SEXL7 in the DC.dat file to zero - components obsolete.
-!
-!Updated corrector .dat files to reflect 06/19/19 values.
-!
-!Added some bcell description to .seq file - injection, extraction, bex, RF, collimators, notcher.
+!		Added RF20 to BCEL18, RF21 & RF22 to BCEL20 in .seq file. BRF represents Booster RF, but left as drift element.
+!		Set I_SEXL4, I_SEXL5, I_SEXL6, I_SEXL7 in the DC.dat file to zero - components obsolete.
+!		Updated corrector .dat files to reflect 06/19/19 values.
+!		Added some bcell description to .seq file - injection, extraction, bex, RF, collimators, notcher.
 !
 !03/09/2020 Jeff Eldred
+!		Fixed BCEL20 length discrepancy introduced in 01/14 update, removed OLDPOS/RPOS_MON_OLD. 
 !
-!Fixed BCEL20 length discrepancy introduced in 01/14 update, removed OLDPOS/RPOS_MON_OLD. 
+!03/25/2020 Jeff Eldred
+!		Removed some commented out lines.
+!       Verified that all cell lengths = 19.758448 at timeslot=3, with orbump & dogleg off
