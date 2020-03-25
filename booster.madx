@@ -19,6 +19,12 @@
 ! New calibration of sextupole strengths that are dependent on ke are from "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
 ! Gradient magnet quad strengths now vary with ke.
 !E1 and E2 are changed on doglegs
+/************
+Latest official versions of Booster lattice is at https://cdcvs.fnal.gov/redmine/projects/booster_madx_lattice_files/repository
+
+Always use the latest version for best results.
+*************/
+
 
  option, -echo, warn, info;
  set,  format="20.10f";
