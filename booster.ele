@@ -65,7 +65,7 @@ PRIM_H      : RCOLLIMATOR	, L := 0.0001	;
 PRIM_V      : RCOLLIMATOR	, L := 0.0001	;
 
 //---------------------- Instrumentation        ---------------------------------------------
-FOIL		: INSTRUMENT	, L := 0.001/cos(2*angle_orbump);        ! injection stripping foil
+FOIL		: INSTRUMENT	, L := 0.001*(korbump/cos(2*angle_orbump) + (1-korbump));        ! injection stripping foil
 IPM         : INSTRUMENT	, L = 0.3;
 RPOS_MON_OLD	: MONITOR		, L = 0.1;	      ! Device before Summer 2016 shutdown
 RPOS_MON	: MONITOR		, L = 0.0;	      ! After the Summer 2016 shutdown, RPOS uses HS16 bpm
