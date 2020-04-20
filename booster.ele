@@ -38,13 +38,13 @@ SSEXT       : SEXTUPOLE	    		, L = 0.024 , CALIB = 2.0 * 0.045477 / 0.024 / Brh
 BPM_1	    : MONITOR			, L = 0.024 ;  
 
 //---------------------- Corrector Package Elements ---------------------------------------------
-DHZ_L1    	: HKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000366 / Brho;         
-DVT_L1       	: VKICKER		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.000365 / Brho;      
-NQUAD_L1        : QUADRUPOLE		, L = 0.024/cos(2*angle_orbump) , CALIB = 0.002489 / 0.024 / Brho;        
-SQUAD_L1  	: QUADRUPOLE 		, L = 0.024/cos(2*angle_orbump) , CALIB = -0.003924 / 0.024 / Brho;        
-NSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 2.0 * 0.045831 / 0.024 / Brho;      
-SSEXT_L1        : SEXTUPOLE	    	, L = 0.024/cos(2*angle_orbump) , CALIB = 2.0 * 0.045477 / 0.024 / Brho;     
-BPM_1_L1        : MONITOR		, L = 0.024/cos(2*angle_orbump) ;  
+DHZ_L1    	: HKICKER		, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) , CALIB = 0.000366 / Brho;         
+DVT_L1       	: VKICKER		, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) , CALIB = 0.000365 / Brho;      
+NQUAD_L1        : QUADRUPOLE		, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) , CALIB = 0.002489 / 0.024 / Brho;        
+SQUAD_L1  	: QUADRUPOLE 		, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) , CALIB = -0.003924 / 0.024 / Brho;        
+NSEXT_L1        : SEXTUPOLE	    	, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) , CALIB = 2.0 * 0.045831 / 0.024 / Brho;      
+SSEXT_L1        : SEXTUPOLE	    	, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) , CALIB = 2.0 * 0.045477 / 0.024 / Brho;     
+BPM_1_L1        : MONITOR		, L = 0.024*(korbump/cos(2*angle_orbump) + (1-korbump)) ;  
 
 //---------------------- Corrector Package Elements ---------------------------------------------
 DHZ_L3    	: HKICKER		, L = 0.024/cos(2*angle_dogleg) , CALIB = 0.000366 /  Brho;         
@@ -105,11 +105,11 @@ SC	    : DRIFT		, L = 0.6;
 SEPTU03     : RBEND	, L = 1.524/2, ANGLE = 0.00000001, TILT = pi/2	;    !  septum, extraction to MI-8
 
 //-----  Orbump         -----------------------------------------------------
-angle_orbump = 0.0011; ! angle_orbump != 0
-angle_orbump_2 = 0.0022; ! angle_orbump != 0
+angle_orbump = 0.011; ! angle_orbump != 0
+angle_orbump_2 = 0.022; ! angle_orbump != 0
 
 L_ORB       = 0.5585;!rbend;
-L1_ORB       = L_ORB*angle_orbump*2/sin(angle_orbump*2);!sbend
+L1_ORB       = L_ORB*(korbump*angle_orbump*2/sin(angle_orbump*2)+(1-korbump));!sbend
 
 IF (t0 < 2.05) {korbump = 1;}
 ELSE {korbump = 0;}              ! orbump is only on for ~ 50 microsecs after injection
