@@ -1,0 +1,69 @@
+  title, 'FNAL Booster lattice';
+ !
+ !  Main file for running the Booster lattice in Synergia, modified
+ ! from
+ ! Converted from MAD8 version by M. McAteer and C.Y. Tan 
+ ! Operational values of corrector package magnet currents and dogleg current have been added -MM
+ ! Pseudo-quad errors from LOCO analysis of 3/4/13 ORM measurement have been added -MM
+ ! Dogleg layout has been altered to match drawing of layout -MM
+ ! Note: layout of dogleg magnet (particularly location of U3L bpm) still needs to be verified by copmassarison with survey data -MM
+ ! Eliana has corrected dogleg layout on the basis of Kyiomi layout
+ ! Added in switches for LOCO -- cytan
+ !I changed booster.seq from sequence to line mode in order to put drift in between elements for now. The problem of current file was
+ !that all elements were set on a beam trajectory which had a fixed length. If the bending current was changed, the position of 
+ !the element center was not moved in the trajectory and the length of drifts before and after the element were adjusted automatically. 
+ !I'll change the  booster.seq file to sequence mode with arbitrary arc length later. It should not make any change on twiss output.  04/08/14 -K.Seiya
+ !The length between ORBUMP1 and 2 and ORBUMP2 and 4 were different in booster.ele.  The locations were fixed and the orbit was closed at injection and extraction energy.
+ !ORBUMPs and DOGLEGs were changed from RBEND magnets to SBEND.  09/08/14 -K.Seiya 
+ !The magnet lengths were changed for both F and D magnets.  'RBARC' setting  has to be 'RBARC=TRUE' which is default.    The megnets were defined as 'RBEND' and the length means 'straight length', NOT 'arc length'. "blength" is used as an 'arc length' in order to calculate the bending angle. -09/17/14 K. Seiya
+! Changed ORBUMP length from 0.4823 to 0.5585. -09/24/14 K. Seiya
+!Since DHZ and DVT were defined as kickers, not dipole, 'CALIB = 0.000366 /  0.024 / Brho' was changed to   'CALIB = 0.000366 / Brho';  -06/25/15 K. Seiya
+!CALIB for sextupole and skew sextupole was changed by factor 2. The number N[T/m/A] from measurement is equal to 1/2 * B2 * L when By = B0 + B1 * x + 1/2 B2 * x^2 + ... , therefore K2 = 1 / Brho * B2 = 1 / Brho * 2 * N / L.   - 06/26/15 K. Seiya
+! New calibration of sextupole strengths that are dependent on ke are from "Fermilab Booster Magnets Sextupole Components", A. Drozhdin, J. DiMarco, R. Tomlin, October 31, 2003.
+! Gradient magnet quad strengths now vary with ke.
+!E1 and E2 are changed on doglegs
+/************
+Latest official versions of Booster lattice is at https://cdcvs.fnal.gov/redmine/projects/booster_madx_lattice_files/repository
+
+Always use the latest version for best results.
+*************/
+
+
+ option, -echo, warn, info;
+ set,  format="20.10f";
+ option, RBARC=true;
+
+/**********
+   choose time in acceleration rapmass to use by choosing a "slot" on the magnet setting table (ie QL.dat table):
+   set errorSwicth=1 if error tables are needed to be used.
+   set isLOCO = 1 if this file is used for LOCO fitting.
+
+   IMPORTANT!!!!! For LOCO fitting, timeSlot must be set to 1 because there there will only be 1 data line in QL*.dat, QS*.dat etc.
+***************************/
+
+!
+!   timeSlot will be selected by the Synergia job
+!
+
+/************ read in settings for corrector package magnets, dogleg, and pseudo-quad errors from tables: ***************************/
+
+! The TIME variable will have been read in from the corrector files
+! by choosing the timeSlot.
+
+
+KE0=.4;  											! injection kinetic energy (in GeV)
+KEext=8.0;  										! extraction kinetic energy (in GeV)
+pcInj = sqrt(( KE0+ pmass)*( KE0+ pmass)- pmass* pmass); 		 ! injection momentum
+pcExt = sqrt(( KEext+ pmass)*( KEext+ pmass)- pmass*pmass); 	 ! extraction momentum
+pc = (pcExt + pcInj)/2 - (pcExt - pcInj)/2 * cos(2*PI*15*(t0-2)/1000);		! momentum at chosen time point
+kpc=pcInj/pc;
+Brho= pc/ clight *1e9;  
+Brho0= pcInj/ clight *1e9;
+
+etot=sqrt(pc*pc+pmass*pmass);				! total energy
+ke1 = etot - pmass;					! kinetic energy at that breakpoint
+
+call, file = './booster.ele';
+call, file = './booster.seq';
+
+beam, particle=proton, pc=pc;
