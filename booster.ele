@@ -101,6 +101,16 @@ MINS	    : DRIFT		, L = 0.5;
 SA	    : DRIFT		, L = 0.176;
 SB	    : DRIFT		, L = 0.256;
 SC	    : DRIFT		, L = 0.6;
+//---------------------- RFCAVITY        ---------------------------------------------//
+RFlag=0; 
+RFvolt=1.1/22;
+RFC	    : RFCAVITY,   L = 0, harmon=84, lag:=RFlag, volt:=RFvolt;
+DRRF        : DRIFT             , L = 2.35/2;
+//! restored RFcavity 2019-04-16 EGS
+!BRF         : line=(DRRF,RFC,DRRF);
+BRF: sequence, l = 2.35;
+rfc, at=2.35/2.0;
+endsequence;
 //------  Septa     ------------------------------------------------------------------//
 SEPTU03     : RBEND	, L = 1.524/2, ANGLE = 0.00000001, TILT = pi/2	;    !  septum, extraction to MI-8
 
