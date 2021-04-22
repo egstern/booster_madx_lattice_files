@@ -1,0 +1,39 @@
+timeSlot=3;
+/************ read in settings for corrector package magnets, dogleg, and pseudo-quad errors from tables: ***************************/
+
+! strength of doglegs, harmonic correctors, and other DC elements:
+READMYTABLE,file="DC.dat",table=DCtable;
+setvars, table=DCtable,row= 1;
+value, i_DOGL03;
+
+! strengths of corrector package elements:
+READMYTABLE,file="QL.dat",table=QLtable;
+setvars, table=QLtable,row= timeSlot;
+READMYTABLE,file="QS.dat",table=QStable;
+setvars, table=QStable,row= timeSlot;
+READMYTABLE,file="SQL.dat",table=SQLtable;
+setvars, table=SQLtable,row= timeSlot;
+READMYTABLE,file="SQS.dat",table=SQStable;
+setvars, table=SQStable,row= timeSlot;
+READMYTABLE,file="SXL.dat",table=SXLtable;
+setvars, table=SXLtable,row= timeSlot;
+READMYTABLE,file="SXS.dat",table=SXStable;
+setvars, table=SXStable,row= timeSlot;
+READMYTABLE,file="SSL.dat",table=SSLtable;
+setvars, table=SSLtable,row= timeSlot;
+READMYTABLE,file="SSS.dat",table=SSStable;
+setvars, table=SSStable,row= timeSlot;
+!
+! The gradient magnets do not have constant quad strengths
+! but vary with ke.
+!
+! The qsdqsf.dat file was created by fitting qsd and qsf to the measured tune data.
+! This fit was found using 13 Nov 2015 measured data.
+! Above transition only a rough fit is done at this time.
+!
+READMYTABLE,file="qsdqsf.dat",table=qsqdtable;
+setvars, table=qsqdtable,row= timeSlot;
+
+
+t0=time;
+value, t0;
