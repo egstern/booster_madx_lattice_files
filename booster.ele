@@ -697,5 +697,3 @@ CPL23 :    line=(HL23,VL23,QL23,BPML23,QSL23,QSLERR23,SXL23,SSL23);
  SXL24           : NSEXT           , 	          K2 	:= NSEXT->CALIB*I_SXL24   		;
  SSL24           : SSEXT           , 	          K2S	:= SSEXT->CALIB*I_SSL24   		;
 CPL24 :    line=(HL24,VL24,QL24,BPML24,QSL24,QSLERR24,SXL24,SSL24); 
-
-return;
